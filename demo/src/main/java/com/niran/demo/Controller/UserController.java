@@ -16,18 +16,15 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(value="/register",method= RequestMethod.POST)
-    public String register(@RequestParam("uname") String name,@RequestParam("mail")String email,@RequestParam("pwd") String password,
-                           @RequestParam("fname")String fname,@RequestParam("lname")String lname,@RequestParam("date")String date,
-                           @RequestParam("gen")String gender){
-        User u = new User();
+    public String register(@RequestBody User u){
         String status="";
-        u.setPassword(password);
-        u.setUname(name);
-        u.setEmail(email);
-        u.setFname(fname);
-        u.setLname(lname);
-        u.setDateofbirth(date);
-        u.setGender(gender);
+//        u.setPassword(password);
+//        u.setUname(name);
+//        u.setEmail(email);
+//        u.setFname(fname);
+//        u.setLname(lname);
+//        u.setDateofbirth(date);
+//        u.setGender(gender);
         status=userService.userRegister(u);
         return status;
     }
