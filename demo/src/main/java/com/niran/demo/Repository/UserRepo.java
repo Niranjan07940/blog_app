@@ -42,4 +42,30 @@ public class UserRepo {
         });
         return us.isEmpty()?null:us.get(0);
     }
+
+    public User  verifyforOtp(String email) {
+        String query="select *from register1 where email=?";
+        Object arr[]={email};
+        List<User> user=jdbcTemplate.query(query,arr,(rs,rowNum)->{
+            User u = new User();
+            u.setEmail(rs.getString(3));
+            return u;
+        });
+
+        return user.isEmpty()?null:user.get(0);
+    }
+
+    public String updateuserPwd(User u) {
+        String query="update register1 set password=? where email=?";
+        Object arr[]={u.getPassword(),u.getEmail()};
+        String status="";
+        int x=jdbcTemplate.update(query,arr);
+        if(x==1){
+            status="successfully updated";
+        }
+        else{
+            status="password not updated";
+        }
+        return status;
+    }
 }

@@ -7,12 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
 public class UserController {
     @Autowired
     private UserService userService;
@@ -42,4 +40,23 @@ public class UserController {
         ResponseEntity<?> response=userService.userVerify(u);
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
+    @RequestMapping(value="/sendOtp",method=RequestMethod.POST)
+    public ResponseEntity<?> sendOtp(@RequestParam("email") String email) throws Exception{
+        String message=userService.getOtp(email);
+        return ResponseEntity.ok(message);
+    }
+    @RequestMapping(value="/verifyOtp",method=RequestMethod.POST)
+    public ResponseEntity<?> verifyOtp(@RequestParam("otp") int Otp){
+        String status=userService.verify(Otp);
+        return ResponseEntity.ok(status);
+    }
+    @RequestMapping(value="/updatePwd",method=RequestMethod.POST)
+    public ResponseEntity<?> updatePassword(@RequestParam("email") String email,@RequestParam("pwd")String password){
+        User u = new User();
+        u.setPassword(password);
+        u.setEmail(email);
+        String status=userService.updatePwd(u);
+        return ResponseEntity.ok(status);
+    }
+
 }
