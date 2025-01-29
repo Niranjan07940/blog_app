@@ -23,10 +23,10 @@ public class UserRepo {
         int x1=jdbcTemplate.update(query1,arr1);
         int x2=jdbcTemplate.update(query2,arr2);
         if(x1==1 && x2==1){
-            status="success";
+            status="successfully registered";
         }
         else{
-            status="failure";
+            status="username or email is already existed";
         }
         return status;
     }
