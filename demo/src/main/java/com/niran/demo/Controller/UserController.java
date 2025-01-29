@@ -19,7 +19,7 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(value="/register",method= RequestMethod.POST)
-    public ResponseEntity<?> register(@RequestBody User u){
+    public Map<String,Object> register(@RequestBody User u){
         String status="";
 //        u.setPassword(password);
 //        u.setUname(name);
@@ -31,7 +31,7 @@ public class UserController {
         status=userService.userRegister(u);
         Map<String,Object> map= new HashMap<>();
         map.put("message",status);
-        return ResponseEntity.ok(map);
+        return map;
     }
     @RequestMapping(value="/sign",method=RequestMethod.POST)
     public ResponseEntity<?> sign(@RequestBody User u){
