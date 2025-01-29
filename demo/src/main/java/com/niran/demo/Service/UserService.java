@@ -46,15 +46,24 @@ public class UserService {
         return status;
     }
     public String userVerify(User user){
-        Authentication authentication=authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUname(),user.getPassword()));
-        if(authentication.isAuthenticated()){
-            CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
-            String status=jwtService.generateToken(user.getUname());
-            String username = customUserDetails.getUsername();
-            String email = customUserDetails.getEmail();
-            String password=customUserDetails.getPassword();
-            return (status == null || status.isEmpty()) ? "user does not exist" : status;
+        try{
+            Authentication authentication=authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUname(),user.getPassword()));
+            if(authentication.isAuthenticated()){
+                CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+                String status=jwtService.generateToken(user.getUname());
+                String username = customUserDetails.getUsername();
+                String email = customUserDetails.getEmail();
+                String password=customUserDetails.getPassword();
+                return (status == null || status.isEmpty()) ? "user does not exist" : status;
+            }
+
         }
+        catch (Exception e){
+            e.printStackTrace();
+
+        }
+//        Authentication authentication=authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUname(),user.getPassword()));
+
         return  "user does not exist";
     }
 
