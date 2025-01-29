@@ -81,7 +81,7 @@ public class UserService {
         helper.setText("otp for verification :"+otp+" "+"this otp is valid only for "+new Date(System.currentTimeMillis()+70*1000));
         mailSender.send(message);
         fp.setStoreOtp(otp);
-        fp.setExpirationTime(new Date(System.currentTimeMillis()+ 70 * 1000));
+        fp.setExpirationTime(new Date(System.currentTimeMillis()+ 30 * 1000));
         return "success";
     }
     private int generateOtp(){
