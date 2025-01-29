@@ -24,7 +24,7 @@ public class UserRepo {
             int x1=jdbcTemplate.update(query1,arr1);
             int x2=jdbcTemplate.update(query2,arr2);
             if(x1==1 && x2==1){
-                status="successfully registered";
+                status="user successfully registered";
             }
         }
         catch(Exception e){

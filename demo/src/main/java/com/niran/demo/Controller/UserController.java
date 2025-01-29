@@ -21,13 +21,6 @@ public class UserController {
     @RequestMapping(value="/register",method= RequestMethod.POST)
     public ResponseEntity<?> register(@RequestBody User u){
         String status="";
-//        u.setPassword(password);
-//        u.setUname(name);
-//        u.setEmail(email);
-//        u.setFname(fname);
-//        u.setLname(lname);
-//        u.setDateofbirth(date);
-//        u.setGender(gender);
         status=userService.userRegister(u);
         Map<String,Object> map= new HashMap<>();
         map.put("message",status);
