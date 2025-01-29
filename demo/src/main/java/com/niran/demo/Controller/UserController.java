@@ -1,5 +1,6 @@
 package com.niran.demo.Controller;
 
+import com.niran.demo.Beans.ForgotPassword;
 import com.niran.demo.Beans.User;
 import com.niran.demo.Repository.UserRepo;
 import com.niran.demo.Service.UserService;
@@ -39,33 +40,40 @@ public class UserController {
         return ResponseEntity.ok(map);
     }
     @RequestMapping(value="/sendOtp",method=RequestMethod.POST)
-    public ResponseEntity<?> sendOtp(@RequestParam("email") String email) throws Exception{
-        String message=userService.getOtp(email);
+    public ResponseEntity<?> sendOtp(@RequestBody User u) throws Exception{
+        String message=userService.getOtp(u.getEmail());
         Map<String,Object> map=new HashMap<>();
         if(message.equals("success")){
             map.put("message","user exist otp sent successfully");
             return new ResponseEntity<>(map,HttpStatus.OK);
         }
-
         map.put("message","user not found");
         return new ResponseEntity<>(map, HttpStatusCode.valueOf(404));
-
-
     }
     @RequestMapping(value="/verifyOtp",method=RequestMethod.POST)
-    public ResponseEntity<?> verifyOtp(@RequestParam("otp") int Otp){
-        String status=userService.verify(Otp);
-        return ResponseEntity.ok(status);
+    public ResponseEntity<?> verifyOtp(@RequestBody ForgotPassword fp){
+        String status=userService.verify(fp.getStoreOtp());
+        Map<String,Object> map=new HashMap<>();
+        if(status.equals("time expired")){
+            map.put("message",status);
+            return new ResponseEntity<>(map,HttpStatusCode.valueOf(400));
+        }
+        else if(status.equals("otp mismatched")){
+            map.put("message",status);
+            return new ResponseEntity<>(map,HttpStatusCode.valueOf(400));
+        }
+        map.put("message",status);
+        return new ResponseEntity<>(map,HttpStatus.OK);
     }
     @RequestMapping(value="/updatePwd",method=RequestMethod.POST)
     public ResponseEntity<?> updatePassword(@RequestBody User u){
-//        User u = new User();
-//        u.setPassword(password);
-//        u.setEmail(email);
         Map<String,Object> map= new HashMap<>();
         String status=userService.updatePwd(u);
-        map.put("message",status);
-        return ResponseEntity.ok(map);
+        if(status.equals("success")){
+            map.put("message","password updated Successfully");
+            return new ResponseEntity<>(map,HttpStatus.OK);
+        }
+        map.put("message","password not updated due to some reason");
+        return new ResponseEntity<>(map,HttpStatusCode.valueOf(400));
     }
-
 }

@@ -18,11 +18,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
 import java.util.Random;
-import java.util.TimeZone;
 
 @Service
 public class UserService {
@@ -40,7 +38,7 @@ public class UserService {
     @Value("${spring.mail.username}")
     private String fromMail;
     @Autowired
-    private ForgotPassword fp;
+    private ForgotPassword fp1;
 
     public String userRegister(User user) {
         user.setPassword(encoder.encode(user.getPassword()));
@@ -58,13 +56,10 @@ public class UserService {
                 String password=customUserDetails.getPassword();
                 return (status == null || status.isEmpty()) ? "user does not exist" : status;
             }
-
         }
         catch (Exception e){
             System.out.println("user does not exist");
-
         }
-
         return  "user does not exist";
     }
 
@@ -80,13 +75,10 @@ public class UserService {
         helper.setFrom(fromMail);
         helper.setTo(email);
         helper.setSubject("otp verification");
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-        sdf.setTimeZone(TimeZone.getTimeZone("Asia/Kolkata"));
-        String formattedExpirationTime = sdf.format(new Date(System.currentTimeMillis()+30*1000));
-        helper.setText("otp for verification :"+otp+" "+"this otp is valid only for "+formattedExpirationTime);
+        helper.setText("otp for verification :"+otp+" "+"this otp is valid only for "+new Date(System.currentTimeMillis()+ 30 * 1000));
         mailSender.send(message);
-        fp.setStoreOtp(otp);
-        fp.setExpirationTime(new Date(System.currentTimeMillis()+ 30 * 1000));
+        fp1.setStoreOtp(otp);
+        fp1.setExpirationTime(new Date(System.currentTimeMillis()+ 33 * 1000));
         return "success";
     }
     private int generateOtp(){
@@ -94,19 +86,15 @@ public class UserService {
         return random.nextInt(100000,999999);
     }
     public String verify(int otp) {
-        int verifyOtp=fp.getStoreOtp();
-        if(verifyOtp!=otp){
-            return "otp mismatched";
+        int verifyOtp=fp1.getStoreOtp();
+        if(fp1.getExpirationTime().before(Date.from(Instant.now()))){
+            return "time expired";
         }
-        else if(verifyOtp==otp){
-            if(fp.getExpirationTime().before(Date.from(Instant.now()))){
-                System.out.println(fp.getExpirationTime()+" "+Date.from(Instant.now()));
-                return "time expired";
-            }
+        else if(verifyOtp!=otp){
+            return "otp mismatched";
         }
         return "verified successfully";
     }
-
     public String updatePwd(User u) {
         u.setPassword(encoder.encode(u.getPassword()));
         System.out.println(u.getPassword());

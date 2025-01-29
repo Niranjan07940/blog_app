@@ -64,10 +64,10 @@ public class UserRepo {
         String status="";
         int x=jdbcTemplate.update(query,arr);
         if(x==1){
-            status="successfully updated";
+            status="success";
         }
         else{
-            status="password not updated";
+            status="failure";
         }
         return status;
     }
