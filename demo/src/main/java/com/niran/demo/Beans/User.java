@@ -59,7 +59,6 @@ public class User {
         this.uname = uname;
     }
     public String getPassword() {
-
         return password;
     }
     public void setPassword(String password) {

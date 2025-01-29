@@ -21,6 +21,7 @@ import java.util.Date;
 
 
 @RestController
+@CrossOrigin
 public class BlogController {
 
     @Value("${image.storage.path}")

@@ -9,6 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @CrossOrigin
 public class UserController {
@@ -16,7 +19,7 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(value="/register",method= RequestMethod.POST)
-    public String register(@RequestBody User u){
+    public ResponseEntity<?> register(@RequestBody User u){
         String status="";
 //        u.setPassword(password);
 //        u.setUname(name);
@@ -26,14 +29,16 @@ public class UserController {
 //        u.setDateofbirth(date);
 //        u.setGender(gender);
         status=userService.userRegister(u);
-        return status;
+        Map<String,Object> map= new HashMap<>();
+        map.put("message",status);
+        return ResponseEntity.ok(map);
     }
     @RequestMapping(value="/sign",method=RequestMethod.POST)
-    public ResponseEntity<?> sign(@RequestParam("uname")String username, @RequestParam("pwd") String password){
+    public ResponseEntity<?> sign(@RequestBody User u){
         String status="";
-        User u = new User();
-        u.setPassword(password);
-        u.setUname(username);
+//        User u = new User();
+//        u.setPassword(password);
+//        u.setUname(username);
         ResponseEntity<?> response=userService.userVerify(u);
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
@@ -48,12 +53,14 @@ public class UserController {
         return ResponseEntity.ok(status);
     }
     @RequestMapping(value="/updatePwd",method=RequestMethod.POST)
-    public ResponseEntity<?> updatePassword(@RequestParam("email") String email,@RequestParam("pwd")String password){
-        User u = new User();
-        u.setPassword(password);
-        u.setEmail(email);
+    public ResponseEntity<?> updatePassword(@RequestBody User u){
+//        User u = new User();
+//        u.setPassword(password);
+//        u.setEmail(email);
+        Map<String,Object> map= new HashMap<>();
         String status=userService.updatePwd(u);
-        return ResponseEntity.ok(status);
+        map.put("message",status);
+        return ResponseEntity.ok(map);
     }
 
 }
