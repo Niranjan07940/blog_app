@@ -69,7 +69,7 @@ public class UserService {
     public String getOtp(String email)throws Exception {
         User u=userRepo.verifyforOtp(email);
         if(u==null){
-            return "no user exist";
+            return "failure";
         }
         int otp=generateOtp();
         MimeMessage message=mailSender.createMimeMessage();
@@ -82,7 +82,7 @@ public class UserService {
         mailSender.send(message);
         fp.setStoreOtp(otp);
         fp.setExpirationTime(new Date(System.currentTimeMillis()+ 70 * 1000));
-        return "otp sent successfully";
+        return "success";
     }
     private int generateOtp(){
         Random random= new Random();

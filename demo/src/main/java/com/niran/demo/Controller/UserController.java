@@ -5,6 +5,7 @@ import com.niran.demo.Repository.UserRepo;
 import com.niran.demo.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
@@ -41,8 +42,15 @@ public class UserController {
     public ResponseEntity<?> sendOtp(@RequestParam("email") String email) throws Exception{
         String message=userService.getOtp(email);
         Map<String,Object> map=new HashMap<>();
-        map.put("message",message);
-        return ResponseEntity.ok(map);
+        if(message.equals("success")){
+            map.put("message","user exist otp sent successfully");
+            return new ResponseEntity<>(map,HttpStatus.OK);
+        }
+
+        map.put("message","user not found");
+        return new ResponseEntity<>(map, HttpStatusCode.valueOf(400));
+
+
     }
     @RequestMapping(value="/verifyOtp",method=RequestMethod.POST)
     public ResponseEntity<?> verifyOtp(@RequestParam("otp") int Otp){
