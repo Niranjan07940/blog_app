@@ -16,17 +16,20 @@ public class UserRepo {
     @Transactional
     public String addUser(User u) {
         String status="";
-        String query1="insert into register1 values(?,?,?)";
-        String query2="insert into register2 values(?,?,?,?,?)";
-        Object arr1[]={u.getUname(),u.getEmail(),u.getPassword()};
-        Object arr2[]={u.getUname(),u.getFname(),u.getLname(),Date.valueOf(u.getDateofbirth()),u.getGender()};
-        int x1=jdbcTemplate.update(query1,arr1);
-        int x2=jdbcTemplate.update(query2,arr2);
-        if(x1==1 && x2==1){
-            status="successfully registered";
+        try{
+            String query1="insert into register1 values(?,?,?)";
+            String query2="insert into register2 values(?,?,?,?,?)";
+            Object arr1[]={u.getUname(),u.getEmail(),u.getPassword()};
+            Object arr2[]={u.getUname(),u.getFname(),u.getLname(),Date.valueOf(u.getDateofbirth()),u.getGender()};
+            int x1=jdbcTemplate.update(query1,arr1);
+            int x2=jdbcTemplate.update(query2,arr2);
+            if(x1==1 && x2==1){
+                status="successfully registered";
+            }
         }
-        else{
+        catch(Exception e){
             status="username or email is already existed";
+
         }
         return status;
     }
