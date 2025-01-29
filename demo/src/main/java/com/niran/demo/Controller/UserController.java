@@ -40,7 +40,9 @@ public class UserController {
     @RequestMapping(value="/sendOtp",method=RequestMethod.POST)
     public ResponseEntity<?> sendOtp(@RequestParam("email") String email) throws Exception{
         String message=userService.getOtp(email);
-        return ResponseEntity.ok(message);
+        Map<String,Object> map=new HashMap<>();
+        map.put("message",message);
+        return ResponseEntity.ok(map);
     }
     @RequestMapping(value="/verifyOtp",method=RequestMethod.POST)
     public ResponseEntity<?> verifyOtp(@RequestParam("otp") int Otp){
