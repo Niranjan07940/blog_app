@@ -45,16 +45,17 @@ public class UserService {
         String status = userRepo.addUser(user);
         return status;
     }
-    public ResponseEntity<?> userVerify(User user){
+    public String userVerify(User user){
         Authentication authentication=authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUname(),user.getPassword()));
         if(authentication.isAuthenticated()){
             CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+            String status=jwtService.generateToken(user.getUname());
             String username = customUserDetails.getUsername();
             String email = customUserDetails.getEmail();
             String password=customUserDetails.getPassword();
-            return new ResponseEntity<>(jwtService.generateToken(user.getUname()), HttpStatus.ACCEPTED);
+            return status.isEmpty()?"user does not exist":status;
         }
-        return new ResponseEntity<>("not authenticated",HttpStatus.NOT_FOUND);
+        return  "user does not exist";
     }
 
     public String getOtp(String email)throws Exception {

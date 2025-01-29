@@ -19,7 +19,7 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(value="/register",method= RequestMethod.POST)
-    public Map<String,Object> register(@RequestBody User u){
+    public ResponseEntity<?> register(@RequestBody User u){
         String status="";
 //        u.setPassword(password);
 //        u.setUname(name);
@@ -31,16 +31,18 @@ public class UserController {
         status=userService.userRegister(u);
         Map<String,Object> map= new HashMap<>();
         map.put("message",status);
-        return map;
+        return ResponseEntity.ok(map);
     }
     @RequestMapping(value="/sign",method=RequestMethod.POST)
     public ResponseEntity<?> sign(@RequestBody User u){
         String status="";
-//        User u = new User();
-//        u.setPassword(password);
-//        u.setUname(username);
-        ResponseEntity<?> response=userService.userVerify(u);
-        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+        status=userService.userVerify(u);
+        Map<String,Object> map=new HashMap<>();
+        if(status.equals(null)){
+            status="user does not exist";
+        }
+        map.put("message",status);
+        return ResponseEntity.ok(map);
     }
     @RequestMapping(value="/sendOtp",method=RequestMethod.POST)
     public ResponseEntity<?> sendOtp(@RequestParam("email") String email) throws Exception{
