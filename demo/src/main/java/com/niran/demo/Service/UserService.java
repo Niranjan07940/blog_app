@@ -53,7 +53,7 @@ public class UserService {
             String username = customUserDetails.getUsername();
             String email = customUserDetails.getEmail();
             String password=customUserDetails.getPassword();
-            return status.isEmpty()?"user does not exist":status;
+            return (status == null || status.isEmpty()) ? "user does not exist" : status;
         }
         return  "user does not exist";
     }
