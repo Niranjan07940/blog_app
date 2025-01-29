@@ -18,9 +18,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
 import java.util.Random;
+import java.util.TimeZone;
 
 @Service
 public class UserService {
@@ -78,7 +80,10 @@ public class UserService {
         helper.setFrom(fromMail);
         helper.setTo(email);
         helper.setSubject("otp verification");
-        helper.setText("otp for verification :"+otp+" "+"this otp is valid only for "+new Date(System.currentTimeMillis()+70*1000));
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        sdf.setTimeZone(TimeZone.getTimeZone("Asia/Kolkata"));
+        String formattedExpirationTime = sdf.format(new Date(System.currentTimeMillis()+30*1000));
+        helper.setText("otp for verification :"+otp+" "+"this otp is valid only for "+formattedExpirationTime);
         mailSender.send(message);
         fp.setStoreOtp(otp);
         fp.setExpirationTime(new Date(System.currentTimeMillis()+ 30 * 1000));
