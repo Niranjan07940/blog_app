@@ -48,7 +48,7 @@ public class UserController {
         }
 
         map.put("message","user not found");
-        return new ResponseEntity<>(map, HttpStatusCode.valueOf(400));
+        return new ResponseEntity<>(map, HttpStatusCode.valueOf(404));
 
 
     }
