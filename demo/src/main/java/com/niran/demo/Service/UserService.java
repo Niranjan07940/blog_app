@@ -59,10 +59,9 @@ public class UserService {
 
         }
         catch (Exception e){
-            e.printStackTrace();
+            System.out.println("user does not exist");
 
         }
-//        Authentication authentication=authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUname(),user.getPassword()));
 
         return  "user does not exist";
     }
