@@ -2,15 +2,17 @@ package com.niran.demo.Controller;
 
 import com.niran.demo.Beans.ForgotPassword;
 import com.niran.demo.Beans.User;
-import com.niran.demo.Repository.UserRepo;
 import com.niran.demo.Service.UserService;
+import com.niran.demo.Validation.*;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,18 +23,31 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(value="/register",method= RequestMethod.POST)
-    public ResponseEntity<?> register(@RequestBody User u){
+    public ResponseEntity<?> register(@Validated(RegistrationValidationGroup.class) @RequestBody User u, BindingResult result){
         String status="";
-        status=userService.userRegister(u);
         Map<String,Object> map= new HashMap<>();
+        if(result.hasErrors()){
+            for(FieldError error:result.getFieldErrors()){
+                map.put(error.getField(), error.getDefaultMessage());
+            }
+            return new ResponseEntity<>(map,HttpStatusCode.valueOf(400));
+        }
+        status=userService.userRegister(u);
         map.put("message",status);
         return ResponseEntity.ok(map);
     }
     @RequestMapping(value="/sign",method=RequestMethod.POST)
-    public ResponseEntity<?> sign(@RequestBody User u){
+    public ResponseEntity<?> sign(@Validated(LoginValidationGroup.class) @RequestBody User u, BindingResult result){
         String status="";
-        status=userService.userVerify(u);
         Map<String,Object> map=new HashMap<>();
+        if(result.hasErrors()){
+            for(FieldError error:result.getFieldErrors()){
+                map.put(error.getField(), error.getDefaultMessage());
+            }
+            return new ResponseEntity<>(map,HttpStatusCode.valueOf(400));
+        }
+        status=userService.userVerify(u);
+
         if(status.equals(null)){
             status="user does not exist";
         }
@@ -40,9 +55,15 @@ public class UserController {
         return ResponseEntity.ok(map);
     }
     @RequestMapping(value="/sendOtp",method=RequestMethod.POST)
-    public ResponseEntity<?> sendOtp(@RequestBody User u) throws Exception{
-        String message=userService.getOtp(u.getEmail());
+    public ResponseEntity<?> sendOtp(@Validated(ForgotPasswordValidation.class) @RequestBody User u, BindingResult result) throws Exception{
         Map<String,Object> map=new HashMap<>();
+        if(result.hasErrors()){
+            for(FieldError error:result.getFieldErrors()){
+                map.put(error.getField(), error.getDefaultMessage());
+            }
+            return new ResponseEntity<>(map,HttpStatusCode.valueOf(400));
+        }
+        String message=userService.getOtp(u.getEmail());
         if(message.equals("success")){
             map.put("message","user exist otp sent successfully");
             return new ResponseEntity<>(map,HttpStatus.OK);
@@ -51,9 +72,15 @@ public class UserController {
         return new ResponseEntity<>(map, HttpStatusCode.valueOf(404));
     }
     @RequestMapping(value="/verifyOtp",method=RequestMethod.POST)
-    public ResponseEntity<?> verifyOtp(@RequestBody ForgotPassword fp){
-        String status=userService.verify(fp.getStoreOtp());
+    public ResponseEntity<?> verifyOtp(@Validated(OtpValidation.class) @RequestBody ForgotPassword fp, BindingResult result){
         Map<String,Object> map=new HashMap<>();
+        if(result.hasErrors()){
+            for(FieldError error:result.getFieldErrors()){
+                map.put(error.getField(),error.getDefaultMessage());
+            }
+            return new ResponseEntity<>(map,HttpStatusCode.valueOf(400));
+        }
+        String status=userService.verify(fp.getStoreOtp());
         if(status.equals("time expired")){
             map.put("message",status);
             return new ResponseEntity<>(map,HttpStatusCode.valueOf(400));
@@ -66,8 +93,14 @@ public class UserController {
         return new ResponseEntity<>(map,HttpStatus.OK);
     }
     @RequestMapping(value="/updatePwd",method=RequestMethod.POST)
-    public ResponseEntity<?> updatePassword(@RequestBody User u){
+    public ResponseEntity<?> updatePassword(@Validated(UpdatePasswordValidation.class) @RequestBody User u, BindingResult result){
         Map<String,Object> map= new HashMap<>();
+        if(result.hasErrors()){
+            for(FieldError error:result.getFieldErrors()){
+                map.put(error.getField(),error.getDefaultMessage());
+            }
+            return new ResponseEntity<>(map,HttpStatusCode.valueOf(400));
+        }
         String status=userService.updatePwd(u);
         if(status.equals("success")){
             map.put("message","password updated Successfully");
