@@ -1,16 +1,18 @@
 package com.niran.demo.Controller;
 
 import com.niran.demo.Beans.Blog;
+import com.niran.demo.Beans.ForgotPassword;
 import com.niran.demo.Service.BlogService;
 import jakarta.mail.internet.MimeMessage;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
@@ -18,6 +20,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.file.Files;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @RestController
@@ -35,16 +39,33 @@ public class BlogController {
 
     @RequestMapping(value="/blogpost",method= RequestMethod.POST)
     public ResponseEntity<?> addBlog(@RequestParam("uname")String uname, @RequestParam("btitle")String btitle,
-                                  @RequestParam("blog") String blog, @RequestPart("file")MultipartFile file){
+                                     @RequestParam("blog") String blog, @RequestPart("file")MultipartFile file){
         String status="";
+        Map<String,Object> map=new HashMap<>();
+        if(uname=="" || uname.trim().isEmpty()){
+            map.put("uname","uname is required");
+        }
+        else if(btitle=="" || btitle.trim().isEmpty()){
+            map.put("btitle","blog title is required");
+        }
+        else if(blog =="" || blog.trim().isEmpty()){
+            map.put("blog","blog text is required");
+        }
+        else if(file.isEmpty()){
+            map.put("file","file is required");
+        }
+        if(!map.isEmpty()){
+            return new ResponseEntity<>(map,HttpStatusCode.valueOf(400));
+        }
         String fileName=file.getOriginalFilename();
         try{
-            FileOutputStream fos = new FileOutputStream(fileName);
+            FileOutputStream fos = new FileOutputStream(dirpath+"/"+fileName);
             byte[] bfile = file.getBytes();
             fos.write(bfile);
         }
         catch(Exception e){
-            e.printStackTrace();
+            map.put("message","file not uploaded! try with lower size");
+            return new ResponseEntity<>(map,HttpStatusCode.valueOf(400));
         }
         Blog b=new Blog();
         b.setBlog(blog);
@@ -52,7 +73,8 @@ public class BlogController {
         b.setUname(uname);
         b.setImglocation(fileName);
         status=blogService.setBlog(b);
-        return new ResponseEntity<>(status,HttpStatus.CREATED);
+        map.put("message",status);
+        return new ResponseEntity<>(map,HttpStatus.OK);
     }
     @RequestMapping(value="/getImg",method=RequestMethod.POST)
     public ResponseEntity<?> getImg(@RequestParam("id") int id){

@@ -16,18 +16,19 @@ public class BlogRepo {
 
     public String postBlog(Blog b) {
         String status="";
-        String query="insert into blogpost(uname,blog_title,blog_text,image_path,posted_on,updated_on) values(?,?,?,?,?,?)";
-        Object arr[]={b.getUname(),b.getBlogTitle(),b.getBlog(),b.getImglocation(),b.getPostedOn(),b.getUpdatedOn()};
-        int x=jdbcTemplate.update(query,arr);
-        if(x==1){
-            status="success";
+        try{
+            String query="insert into blogpost(posted_by,blog_title,blog_text,image_path,posted_on,update_on) values(?,?,?,?,?,?)";
+            Object arr[]={b.getUname(),b.getBlogTitle(),b.getBlog(),b.getImglocation(),b.getPostedOn(),b.getUpdatedOn()};
+            int x=jdbcTemplate.update(query,arr);
+            if(x==1){
+                status="blog successfully added";
+            }
         }
-        else{
-            status="failure";
+        catch(Exception e){
+            status="blog not added";
         }
         return status;
     }
-
 
     public Blog getBImg(int id) {
         String query = "select *from blogpost where blog_id=?";

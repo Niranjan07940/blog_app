@@ -1,10 +1,15 @@
 package com.niran.demo.Beans;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 import java.sql.Timestamp;
 
 
 public class Blog {
     private int blogId;
+    @NotBlank(message="Image is required")
     private String imglocation;
 
     public String getImglocation() {
@@ -49,10 +54,16 @@ public class Blog {
         this.blogTitle = blogTitle;
     }
 
+    @NotBlank(message="Username is required")
+    @Size(min=4,max=20,message="Username must be between 4 and 20 characters")
     private String uname;
+    @NotBlank(message="Blog text is required")
     private String blog;
+    @NotBlank(message="blog title is required")
     private String blogTitle;
+
     private Timestamp postedOn;
+
     private Timestamp updatedOn;
 
     public Timestamp getPostedOn() {
