@@ -108,7 +108,11 @@ public class BlogController {
         helper.setSentDate(new Date());
         helper.setFrom(frommail);
         helper.setTo(toEmail);
-        
+        helper.setSubject("open it to know it");
+        helper.setText("Testing mail");
+        File f = new File(dirpath+"/"+"varnasi.jpg");
+        helper.addAttachment(f.getName(),f);
+        mailSender.send(message);
         return "mail sent successfully";
     }
 }
