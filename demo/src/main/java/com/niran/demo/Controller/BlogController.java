@@ -1,27 +1,20 @@
 package com.niran.demo.Controller;
 
 import com.niran.demo.Beans.Blog;
-import com.niran.demo.Beans.ForgotPassword;
 import com.niran.demo.Service.BlogService;
 import jakarta.mail.internet.MimeMessage;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.file.Files;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 
 @RestController
@@ -96,6 +89,16 @@ public class BlogController {
         catch(Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while reading file");
         }
+    }
+
+    @RequestMapping(value="/getBlogs",method=RequestMethod.POST)
+    public ResponseEntity<?> getBlogs(){
+        List<Blog> list=blogService.getAllBlogs();
+        if(list==null){
+            return new ResponseEntity<>("not existed",HttpStatusCode.valueOf(400));
+        }
+        return new ResponseEntity<>(list,HttpStatus.OK);
+
     }
     @RequestMapping(value="/test",method=RequestMethod.POST)
     public String sendEmial() throws Exception{

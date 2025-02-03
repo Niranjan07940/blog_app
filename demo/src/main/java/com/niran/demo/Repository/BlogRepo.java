@@ -4,6 +4,7 @@ import com.niran.demo.Beans.Blog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -39,5 +40,24 @@ public class BlogRepo {
             return b1;
         });
         return blog.isEmpty()?null:blog.get(0);
+    }
+
+
+    @Transactional
+    public List<Blog> getAllBlogsFormrepo() {
+        String status="";
+        String query="select *from blogpost";
+        List<Blog> blogs=jdbcTemplate.query(query,(rs,rowNum)->{
+            Blog b= new Blog();
+            b.setUname(rs.getString(1));
+            b.setBlogId(rs.getInt(2));
+            b.setBlogTitle(rs.getString(3));
+            b.setBlog(rs.getString(4));
+            b.setImglocation(rs.getString(5));
+            b.setPostedOn(rs.getTimestamp(6));
+            b.setUpdatedOn(rs.getTimestamp(7));
+            return b;
+        });
+        return blogs.isEmpty()?null:blogs;
     }
 }

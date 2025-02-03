@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class BlogService {
@@ -26,5 +27,11 @@ public class BlogService {
 
     public Blog getbimg(int id) {
         return blogRepo.getBImg(id);
+    }
+
+
+    public List<Blog> getAllBlogs() {
+        List<Blog> blog=blogRepo.getAllBlogsFormrepo();
+        return blog;
     }
 }
