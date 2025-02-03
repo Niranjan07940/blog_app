@@ -58,6 +58,7 @@ public class BlogController {
         }
         catch(Exception e){
             map.put("message","file not uploaded! try with lower size");
+//            e.printStackTrace();
             return new ResponseEntity<>(map,HttpStatusCode.valueOf(400));
         }
         Blog b=new Blog();
