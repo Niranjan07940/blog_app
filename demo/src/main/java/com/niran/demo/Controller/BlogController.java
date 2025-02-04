@@ -111,7 +111,7 @@ public class BlogController {
     @RequestMapping(value="/getByUname",method=RequestMethod.POST)
     public ResponseEntity<?> getByUname(@RequestBody User u){
         List<Blog> lst=blogService.getBlogsByUname(u.getUname());
-        if(lst.isEmpty()){
+        if(lst==null){
             return new ResponseEntity<>("no blogs posted by you yet!",HttpStatus.valueOf(400));
         }
         return new ResponseEntity<>(lst,HttpStatus.OK);
