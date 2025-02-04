@@ -1,6 +1,7 @@
 package com.niran.demo.Controller;
 
 import com.niran.demo.Beans.Blog;
+import com.niran.demo.Beans.User;
 import com.niran.demo.Service.BlogService;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,6 +106,15 @@ public class BlogController {
         List<Blog> list=new ArrayList<>();
         list.add(blogs);
         return new ResponseEntity<>(list,HttpStatus.OK);
+    }
+
+    @RequestMapping(value="/getByUname",method=RequestMethod.POST)
+    public ResponseEntity<?> getByUname(@RequestBody User u){
+        List<Blog> lst=blogService.getBlogsByUname(u.getUname());
+        if(lst.isEmpty()){
+            return new ResponseEntity<>("no blogs posted by you yet!",HttpStatus.valueOf(400));
+        }
+        return new ResponseEntity<>(lst,HttpStatus.OK);
     }
     @RequestMapping(value="/test",method=RequestMethod.POST)
     public String sendEmial() throws Exception{

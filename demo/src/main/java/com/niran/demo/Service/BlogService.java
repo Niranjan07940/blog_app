@@ -1,6 +1,7 @@
 package com.niran.demo.Service;
 
 import com.niran.demo.Beans.Blog;
+import com.niran.demo.Beans.User;
 import com.niran.demo.Repository.BlogRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -39,5 +40,10 @@ public class BlogService {
         Blog b=blogRepo.getBlogDataById(blogId);
         return b;
 
+    }
+
+    public List<Blog> getBlogsByUname(String uname) {
+        List<Blog> b=blogRepo.getAllBlogsByUname(uname);
+        return b;
     }
 }
