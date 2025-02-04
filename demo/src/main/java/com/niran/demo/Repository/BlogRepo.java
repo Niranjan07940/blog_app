@@ -77,10 +77,11 @@ public class BlogRepo {
     }
 
     public List<Blog> getAllBlogsByUname(String uname) {
-        String query="select from blogpost where posted_by=?";
+        String query="select *from blogpost where posted_by=?";
         Object arr[]={uname};
         List<Blog> blog=jdbcTemplate.query(query,arr,(rs,rowNum)->{
             Blog b=new Blog();
+            b.setUname(rs.getString(1));
             b.setBlogTitle(rs.getString(3));
             b.setBlog(rs.getString(4));
             b.setImglocation(rs.getString(5));
