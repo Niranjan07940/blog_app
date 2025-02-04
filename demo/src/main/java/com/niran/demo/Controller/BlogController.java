@@ -91,7 +91,6 @@ public class BlogController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while reading file");
         }
     }
-
     @RequestMapping(value="/getBlogs",method=RequestMethod.POST)
     public ResponseEntity<?> getBlogs(){
         List<Blog> list=blogService.getAllBlogs();
@@ -99,7 +98,6 @@ public class BlogController {
             return new ResponseEntity<>("not existed",HttpStatusCode.valueOf(400));
         }
         return new ResponseEntity<>(list,HttpStatus.OK);
-
     }
     @RequestMapping(value="/test",method=RequestMethod.POST)
     public String sendEmial() throws Exception{
