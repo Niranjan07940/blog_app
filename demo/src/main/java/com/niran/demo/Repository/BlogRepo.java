@@ -77,7 +77,7 @@ public class BlogRepo {
     }
 
     public List<Blog> getAllBlogsByUname(String uname) {
-        String query="select (from blogpost where posted_by=?";
+        String query="select from blogpost where posted_by=?";
         Object arr[]={uname};
         List<Blog> blog=jdbcTemplate.query(query,arr,(rs,rowNum)->{
             Blog b=new Blog();
