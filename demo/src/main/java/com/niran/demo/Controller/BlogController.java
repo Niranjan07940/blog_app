@@ -112,7 +112,9 @@ public class BlogController {
     public ResponseEntity<?> getByUname(@RequestBody User u){
         List<Blog> lst=blogService.getBlogsByUname(u.getUname());
         if(lst==null){
-            return new ResponseEntity<>("no blogs posted by you yet!",HttpStatus.valueOf(400));
+            Map<String,Object> ls=new HashMap<>();
+            ls.put("message","no blogs posted by yoy yet!");
+            return new ResponseEntity<>(ls,HttpStatus.valueOf(400));
         }
         return new ResponseEntity<>(lst,HttpStatus.OK);
     }
