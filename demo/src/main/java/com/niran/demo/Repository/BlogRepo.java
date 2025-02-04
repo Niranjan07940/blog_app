@@ -60,4 +60,20 @@ public class BlogRepo {
         });
         return blogs.isEmpty()?null:blogs;
     }
+    public Blog getBlogDataById(int blogId) {
+        String status="";
+        String query="select *from blogpost where blog_id=?";
+        Object arr[]={blogId};
+        List<Blog> list1=jdbcTemplate.query(query,arr,(rs,rowNum)->{
+            Blog b = new Blog();
+            b.setUname(rs.getString(1));
+            b.setBlogTitle(rs.getString(3));
+            b.setBlog(rs.getString(4));
+            b.setImglocation(rs.getString(5));
+            b.setPostedOn(rs.getTimestamp(6));
+            b.setUpdatedOn(rs.getTimestamp(7));
+            return b;
+        });
+        return list1.isEmpty()?null:list1.get(0);
+    }
 }

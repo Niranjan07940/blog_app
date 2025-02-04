@@ -34,4 +34,10 @@ public class BlogService {
         List<Blog> blog=blogRepo.getAllBlogsFormrepo();
         return blog;
     }
+
+    public Blog getBlogData(int blogId) {
+        Blog b=blogRepo.getBlogDataById(blogId);
+        return b;
+
+    }
 }

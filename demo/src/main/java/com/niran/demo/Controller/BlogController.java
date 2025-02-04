@@ -99,6 +99,13 @@ public class BlogController {
         }
         return new ResponseEntity<>(list,HttpStatus.OK);
     }
+    @RequestMapping(value="/getById",method=RequestMethod.GET)
+    public ResponseEntity<?> getBlogById(@RequestBody Blog b){
+        Blog blogs=blogService.getBlogData(b.getBlogId());
+        List<Blog> list=new ArrayList<>();
+        list.add(blogs);
+        return new ResponseEntity<>(list,HttpStatus.OK);
+    }
     @RequestMapping(value="/test",method=RequestMethod.POST)
     public String sendEmial() throws Exception{
         String toEmail="niranjanreddyp769697@gmail.com";
