@@ -110,7 +110,6 @@ public class BlogController {
     @RequestMapping(value="/getByUname",method=RequestMethod.POST)
     public ResponseEntity<?> getByUname(@RequestBody User u){
         List<Blog> lst=blogService.getBlogsByUname(u.getUname());
-        System.out.println(u.getUname());
         if(lst==null){
             Map<String,Object> ls=new HashMap<>();
             ls.put("message","no blogs posted by you yet!");
@@ -120,7 +119,6 @@ public class BlogController {
     }
     @RequestMapping(value="/deleteBlog",method=RequestMethod.POST)
     public ResponseEntity<?> deteteBlog(@RequestBody Blog b){
-        System.out.println(b.getBlogId());
         String status=blogService.deleteBlogById(b.getBlogId());
         Map<String,Object> map=new HashMap<>();
         if(status.equals("success")){
