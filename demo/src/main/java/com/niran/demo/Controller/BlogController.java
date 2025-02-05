@@ -113,7 +113,7 @@ public class BlogController {
         List<Blog> lst=blogService.getBlogsByUname(u.getUname());
         if(lst==null){
             Map<String,Object> ls=new HashMap<>();
-            ls.put("message","no blogs posted by yoy yet!");
+            ls.put("message","no blogs posted by you yet!");
             return new ResponseEntity<>(ls,HttpStatus.valueOf(400));
         }
         return new ResponseEntity<>(lst,HttpStatus.OK);
