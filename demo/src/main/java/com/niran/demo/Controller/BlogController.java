@@ -117,6 +117,19 @@ public class BlogController {
         }
         return new ResponseEntity<>(lst,HttpStatus.OK);
     }
+
+    @RequestMapping(value="/deleteBlog",method=RequestMethod.POST)
+    public ResponseEntity<?> deteteBlog(@RequestBody Blog b){
+        
+        String status=blogService.deleteBlogById(b.getBlogId());
+        Map<String,Object> map=new HashMap<>();
+        if(status.equals("success")){
+            map.put("message","blog deleted successfully");
+            return new ResponseEntity<>(map,HttpStatus.OK);
+        }
+        map.put("message",status);
+        return new ResponseEntity<>(map,HttpStatus.valueOf(400));
+    }
     @RequestMapping(value="/test",method=RequestMethod.POST)
     public String sendEmial() throws Exception{
         String toEmail="niranjanreddyp769697@gmail.com";

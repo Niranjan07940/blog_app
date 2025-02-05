@@ -82,6 +82,7 @@ public class BlogRepo {
             List<Blog> blog=jdbcTemplate.query(query,arr,(rs,rowNum)->{
                 Blog b=new Blog();
                 b.setUname(rs.getString(1));
+                b.setBlogId(rs.getInt(2));
                 b.setBlogTitle(rs.getString(3));
                 b.setBlog(rs.getString(4));
                 b.setImglocation(rs.getString(5));
@@ -91,4 +92,18 @@ public class BlogRepo {
             });
             return blog.isEmpty()?null:blog;
         }
+
+    public String deleteBlogByIdRepo(int blogId) {
+        String status="";
+        String query="delete from blogpost where blog_id=?";
+        Object arr[]={blogId};
+        int x=jdbcTemplate.update(query,arr);
+        if(x==1){
+            status="success";
+        }
+        else{
+            status="blog not deleted!";
+        }
+        return status;
+    }
 }
