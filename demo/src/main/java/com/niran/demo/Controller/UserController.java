@@ -122,7 +122,7 @@ public class UserController {
         }
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
-    @RequestMapping(value="/updateUser",method=RequestMethod.POST)
+    @RequestMapping(value="/updateProfile",method=RequestMethod.POST)
     public ResponseEntity<?> updateUser(@RequestBody User u){
         String status=userService.updateUserDetails(u);
         Map<String,Object> map=new HashMap<>();

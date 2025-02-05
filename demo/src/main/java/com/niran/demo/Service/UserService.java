@@ -102,11 +102,9 @@ public class UserService {
         String status =userRepo.updateuserPwd(u);
         return status;
     }
-
     public String  updateUserDetails(User u) {
         return userRepo.updateUserDetailsRepo(u);
     }
-
     public List<User> getUserDetails(String uname) {
         List<User> u=userRepo.getUserDataRepo(uname);
         return u;
