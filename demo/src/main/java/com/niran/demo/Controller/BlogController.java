@@ -110,6 +110,7 @@ public class BlogController {
     @RequestMapping(value="/getByUname",method=RequestMethod.POST)
     public ResponseEntity<?> getByUname(@RequestBody User u){
         List<Blog> lst=blogService.getBlogsByUname(u.getUname());
+        System.out.println(u.getUname());
         if(lst==null){
             Map<String,Object> ls=new HashMap<>();
             ls.put("message","no blogs posted by you yet!");
