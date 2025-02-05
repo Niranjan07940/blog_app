@@ -117,7 +117,7 @@ public class UserController {
         return new ResponseEntity<>(map,HttpStatusCode.valueOf(400));
     }
 
-    @RequestMapping(value="/getUname",method=RequestMethod.POST)
+    @RequestMapping(value="/getProfile",method=RequestMethod.POST)
     public ResponseEntity<?> userDetails(@RequestBody User u){
         List<User> user=userService.getUserDetails(u.getUname());
         if(user==null){
