@@ -102,7 +102,7 @@ public class BlogRepo {
             status="success";
         }
         else{
-            status="blog not deleted!";
+            status="no blog is there with given id!";
         }
         return status;
     }
