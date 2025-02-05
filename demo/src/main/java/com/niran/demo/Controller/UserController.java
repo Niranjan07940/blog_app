@@ -5,6 +5,7 @@ import com.niran.demo.Beans.User;
 import com.niran.demo.Service.UserService;
 import com.niran.demo.Validation.*;
 import jakarta.validation.Valid;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -14,6 +15,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -108,5 +110,27 @@ public class UserController {
         }
         map.put("message","password not updated due to some reason");
         return new ResponseEntity<>(map,HttpStatusCode.valueOf(400));
+    }
+
+    @RequestMapping(value="/getUname",method=RequestMethod.POST)
+    public ResponseEntity<?> userDetails(@RequestBody User u){
+        List<User> user=userService.getUserDetails(u.getUname());
+        if(user==null){
+            return  new ResponseEntity<>("no user exist",HttpStatus.valueOf(400));
+        }
+        return new ResponseEntity<>(user,HttpStatus.OK);
+
+    }
+    @RequestMapping(value="/updateUser",method=RequestMethod.GET)
+    public ResponseEntity<?> updateUser(@RequestBody User u){
+        String status=userService.updateUserDetails(u);
+        Map<String,Object> map=new HashMap<>();
+        if(status.equals("success")){
+            status="user successfully updated";
+            map.put("message",status);
+            return new ResponseEntity<>(map,HttpStatus.OK);
+        }
+        map.put("message",status);
+        return new ResponseEntity<>(map,HttpStatus.valueOf(400));
     }
 }

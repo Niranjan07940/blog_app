@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -100,6 +101,15 @@ public class UserService {
         System.out.println(u.getPassword());
         String status =userRepo.updateuserPwd(u);
         return status;
+    }
+
+    public String  updateUserDetails(User u) {
+        return userRepo.updateUserDetailsRepo(u);
+    }
+
+    public List<User> getUserDetails(String uname) {
+        List<User> u=userRepo.getUserDataRepo(uname);
+        return u;
     }
 }
 

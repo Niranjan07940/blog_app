@@ -71,4 +71,40 @@ public class UserRepo {
         }
         return status;
     }
+
+    @Transactional
+    public String updateUserDetailsRepo(User u) {
+        String query1="update register1 set email=? where uname=?";
+        String query2="update register2 set fname=?,lname=?,dob=? where uname=?";
+        String status="";
+        try{
+            Object arr1[]={u.getEmail(),u.getUname()};
+            Object arr2[]={u.getFname(),u.getLname(),Date.valueOf(u.getDateofbirth()),u.getUname()};
+            int x1=jdbcTemplate.update(query1,arr1);
+            int x2=jdbcTemplate.update(query2,arr2);
+            if(x1==1 && x2==1){
+                status="success";
+            }
+        }
+        catch(Exception e){
+            status="email already exist!";
+            e.getMessage();
+        }
+        return status;
+    }
+
+    public List<User> getUserDataRepo(String uname) {
+        String query="select register1.email,register2.fname,register2.lname,register2.dob from " +
+                "register1 INNER JOIN register2 ON register1.uname=register2.uname where register1.uname=?";
+        Object arr[]={uname};
+            List<User> user=jdbcTemplate.query(query,arr,(rs,rowNum)->{
+                User u = new User();
+                u.setEmail(rs.getString("email"));
+                u.setFname(rs.getString("fname"));
+                u.setLname(rs.getString("lname"));
+                u.setDateofbirth(String.valueOf(rs.getDate("dob")));
+                return u;
+            });
+            return user.isEmpty()?null:user;
+    }
 }
