@@ -107,7 +107,6 @@ public class BlogController {
         list.add(blogs);
         return new ResponseEntity<>(list,HttpStatus.OK);
     }
-
     @RequestMapping(value="/getByUname",method=RequestMethod.POST)
     public ResponseEntity<?> getByUname(@RequestBody User u){
         List<Blog> lst=blogService.getBlogsByUname(u.getUname());

@@ -4,8 +4,6 @@ import com.niran.demo.Beans.ForgotPassword;
 import com.niran.demo.Beans.User;
 import com.niran.demo.Service.UserService;
 import com.niran.demo.Validation.*;
-import jakarta.validation.Valid;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -116,7 +114,6 @@ public class UserController {
         map.put("message","password not updated due to some reason");
         return new ResponseEntity<>(map,HttpStatusCode.valueOf(400));
     }
-
     @RequestMapping(value="/getProfile",method=RequestMethod.POST)
     public ResponseEntity<?> userDetails(@RequestBody User u){
         List<User> user=userService.getUserDetails(u.getUname());
@@ -124,9 +121,8 @@ public class UserController {
             return  new ResponseEntity<>("no user exist",HttpStatus.valueOf(400));
         }
         return new ResponseEntity<>(user,HttpStatus.OK);
-
     }
-    @RequestMapping(value="/updateUser",method=RequestMethod.GET)
+    @RequestMapping(value="/updateUser",method=RequestMethod.POST)
     public ResponseEntity<?> updateUser(@RequestBody User u){
         String status=userService.updateUserDetails(u);
         Map<String,Object> map=new HashMap<>();
