@@ -119,8 +119,13 @@ public class BlogController {
     }
     @RequestMapping(value="/deleteBlog",method=RequestMethod.POST)
     public ResponseEntity<?> deteteBlog(@RequestBody Blog b){
-        String status=blogService.deleteBlogById(b.getBlogId());
         Map<String,Object> map=new HashMap<>();
+        Integer integerNum = Integer.valueOf(b.getBlogId());
+        if(integerNum==null){
+            map.put("message","blog is is required");
+            return new ResponseEntity<>(map,HttpStatus.valueOf(400));
+        }
+        String status=blogService.deleteBlogById(b.getBlogId());
         if(status.equals("success")){
             map.put("message","blog deleted successfully");
             return new ResponseEntity<>(map,HttpStatus.OK);
