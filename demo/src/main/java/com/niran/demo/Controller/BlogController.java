@@ -118,8 +118,7 @@ public class BlogController {
         }
         return new ResponseEntity<>(lst,HttpStatus.OK);
     }
-
-    @RequestMapping(value="/deleteBlog",method=RequestMethod.GET)
+    @RequestMapping(value="/deleteBlog",method=RequestMethod.POST)
     public ResponseEntity<?> deteteBlog(@RequestBody Blog b){
         System.out.println(b.getBlogId());
         String status=blogService.deleteBlogById(b.getBlogId());
