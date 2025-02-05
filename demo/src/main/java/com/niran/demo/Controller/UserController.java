@@ -35,8 +35,13 @@ public class UserController {
             return new ResponseEntity<>(map,HttpStatusCode.valueOf(400));
         }
         status=userService.userRegister(u);
+        if(status.equals("success")){
+            status="user registered successfully";
+            map.put("message",status);
+            return new ResponseEntity<>(map,HttpStatus.valueOf(200));
+        }
         map.put("message",status);
-        return ResponseEntity.ok(map);
+        return new ResponseEntity<>(map,HttpStatus.valueOf(400));
     }
     @RequestMapping(value="/sign",method=RequestMethod.POST)
     public ResponseEntity<?> sign(@Validated(LoginValidationGroup.class) @RequestBody User u, BindingResult result){
