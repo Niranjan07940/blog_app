@@ -122,7 +122,7 @@ public class BlogController {
         Map<String,Object> map=new HashMap<>();
         Integer integerNum = Integer.valueOf(b.getBlogId());
         if(integerNum==null){
-            map.put("message","blog is is required");
+            map.put("message","blogId is required");
             return new ResponseEntity<>(map,HttpStatus.valueOf(400));
         }
         String status=blogService.deleteBlogById(b.getBlogId());
