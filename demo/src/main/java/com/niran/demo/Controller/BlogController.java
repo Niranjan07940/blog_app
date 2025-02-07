@@ -94,7 +94,8 @@ public class BlogController {
     }
     @RequestMapping(value="/getBlogs",method=RequestMethod.POST)
     public ResponseEntity<?> getBlogs(){
-        List<Blog> list=blogService.getAllBlogs();
+//        List<Blog> list=blogService.getAllBlogs();
+        List<Blog> list=blogService.getAllBlogsFromJpa();
         if(list==null){
             return new ResponseEntity<>("not existed",HttpStatusCode.valueOf(400));
         }
