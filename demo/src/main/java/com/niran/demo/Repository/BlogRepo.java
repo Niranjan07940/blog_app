@@ -106,4 +106,22 @@ public class BlogRepo {
         }
         return status;
     }
+
+    @Transactional
+    public String getUpdated(Blog b) {
+        String status="";
+        String query="update blogpost set blog_title=?,blog_text=?,image_path=?,update_on=? where blog_id=?";
+        Object arr[]={b.getBlogTitle(),b.getBlogId(),b.getImglocation(),b.getUpdatedOn(),b.getBlogId()};
+        try{
+            int x=jdbcTemplate.update(query,arr);
+            if(x==1){
+                status="success";
+            }
+        }
+        catch(Exception e){
+            status="blog not updated";
+            e.printStackTrace();
+        }
+        return status;
+    }
 }

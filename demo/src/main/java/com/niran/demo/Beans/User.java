@@ -26,6 +26,16 @@ public class User {
     @NotBlank(message = "Date of Birth is required",groups = {RegistrationValidationGroup.class})
     private String dateofbirth;
 
+    private String role;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     public String getGender() {
         return gender;
     }

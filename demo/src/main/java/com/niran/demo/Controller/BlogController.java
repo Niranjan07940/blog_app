@@ -94,8 +94,7 @@ public class BlogController {
     }
     @RequestMapping(value="/getBlogs",method=RequestMethod.POST)
     public ResponseEntity<?> getBlogs(){
-//        List<Blog> list=blogService.getAllBlogs();
-        List<Blog> list=blogService.getAllBlogsFromJpa();
+        List<Blog> list=blogService.getAllBlogs();
         if(list==null){
             return new ResponseEntity<>("not existed",HttpStatusCode.valueOf(400));
         }
@@ -134,6 +133,52 @@ public class BlogController {
         map.put("message",status);
         return new ResponseEntity<>(map,HttpStatus.valueOf(400));
     }
+    @RequestMapping(value="/updateBlog",method=RequestMethod.POST)
+    public ResponseEntity<?> updateBlog(@RequestParam("bid") int id,@RequestParam("btitle") String btitle,
+                                        @RequestParam("blog") String blog,@RequestPart("file")MultipartFile file){
+        String status="";
+        Map<String,Object> map=new HashMap<>();
+        Integer integerNum = Integer.valueOf(id);
+        if(integerNum==null){
+            map.put("blog_id","blog id is required");
+        }
+        else if(btitle=="" || btitle.trim().isEmpty()){
+            map.put("btitle","blog title is required");
+        }
+        else if(blog =="" || blog.trim().isEmpty()){
+            map.put("blog","blog text is required");
+        }
+        else if(file.isEmpty()){
+            map.put("file","file is required");
+        }
+        if(!map.isEmpty()){
+            return new ResponseEntity<>(map,HttpStatusCode.valueOf(400));
+        }
+        String fileName=file.getOriginalFilename();
+        try{
+            FileOutputStream fos= new FileOutputStream(dirpath+"/"+fileName);
+            byte [] bytes=file.getBytes();
+            fos.write(bytes);
+        }
+        catch(Exception e){
+            map.put("message","file not uploaded! try with lower size");
+//            e.printStackTrace();
+            return new ResponseEntity<>(map,HttpStatusCode.valueOf(400));
+        }
+        Blog b = new Blog();
+        b.setBlogId(id);
+        b.setBlogTitle(btitle);
+        b.setImglocation(fileName);
+        b.setBlog(blog);
+        status=blogService.updateBlogData(b);
+        if(status.equals("success")){
+            map.put("message","blog updated successfully");
+            return new ResponseEntity<>(map,HttpStatus.OK);
+        }
+        map.put("message",status);
+        return new ResponseEntity<>(map,HttpStatus.valueOf(400));
+    }
+
     @RequestMapping(value="/test",method=RequestMethod.POST)
     public String sendEmial() throws Exception{
         String toEmail="niranjanreddyp769697@gmail.com";

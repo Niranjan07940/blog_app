@@ -16,6 +16,7 @@ public class CustomUserDetails implements UserDetails {
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+
         return null;
     }
 
@@ -51,5 +52,8 @@ public class CustomUserDetails implements UserDetails {
     public String getEmail(){
         return user.getEmail();
     }
+   public String getRole(){
+        return user.getRole();
+   }
 
 }

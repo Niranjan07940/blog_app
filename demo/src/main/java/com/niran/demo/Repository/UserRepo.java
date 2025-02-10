@@ -17,9 +17,9 @@ public class UserRepo {
     public String addUser(User u) {
         String status="";
         try{
-            String query1="insert into register1 values(?,?,?)";
+            String query1="insert into register1 values(?,?,?,?)";
             String query2="insert into register2 values(?,?,?,?,?)";
-            Object arr1[]={u.getUname(),u.getEmail(),u.getPassword()};
+            Object arr1[]={u.getUname(),u.getEmail(),u.getPassword(),u.getRole()};
             Object arr2[]={u.getUname(),u.getFname(),u.getLname(),Date.valueOf(u.getDateofbirth()),u.getGender()};
             int x1=jdbcTemplate.update(query1,arr1);
             int x2=jdbcTemplate.update(query2,arr2);
@@ -41,6 +41,7 @@ public class UserRepo {
             user1.setUname(rs.getString(1));
             user1.setEmail(rs.getString(2));
             user1.setPassword(rs.getString(3));
+            user1.setRole(rs.getString(4));
             return user1;
         });
         return us.isEmpty()?null:us.get(0);

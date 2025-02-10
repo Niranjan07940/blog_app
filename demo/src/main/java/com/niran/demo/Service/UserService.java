@@ -19,9 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -46,22 +44,31 @@ public class UserService {
         String status = userRepo.addUser(user);
         return status;
     }
-    public String userVerify(User user){
+    public Map<String,Object> userVerify(User user){
+        Map<String,Object> map= new HashMap<>();
         try{
             Authentication authentication=authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUname(),user.getPassword()));
             if(authentication.isAuthenticated()){
                 CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
                 String status=jwtService.generateToken(user.getUname());
-                String username = customUserDetails.getUsername();
-                String email = customUserDetails.getEmail();
-                String password=customUserDetails.getPassword();
-                return (status == null || status.isEmpty()) ? "user does not exist" : status;
+//                String username = customUserDetails.getUsername();
+//                String email = customUserDetails.getEmail();
+//                String password=customUserDetails.getPassword();
+//                String role= customUserDetails.getRole();
+//                System.out.println(email+" "+username+" "+password+" "+role);
+
+                if (status != null) {
+                    map.put("status",status);
+                    map.put("role",customUserDetails.getRole());
+                }
+//                return (status == null || status.isEmpty()) ? "user does not exist" : status;
+                return map;
             }
         }
         catch (Exception e){
             System.out.println("user does not exist");
         }
-        return  "user does not exist";
+        return  map;
     }
 
     public String getOtp(String email)throws Exception {

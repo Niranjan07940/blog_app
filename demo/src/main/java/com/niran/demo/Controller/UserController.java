@@ -51,12 +51,17 @@ public class UserController {
             }
             return new ResponseEntity<>(map,HttpStatusCode.valueOf(400));
         }
-        status=userService.userVerify(u);
-
-        if(status.equals(null)){
-            status="user does not exist";
+        Map<String,Object> map1=userService.userVerify(u);
+//        if(status.equals(null)){
+//            status="user does not exist";
+//        }
+//        map.put("message",status);
+        if(map1==null || map1.isEmpty()){
+            map.put("message","user does not exist!");
+            return new ResponseEntity<>(map,HttpStatus.valueOf(400));
         }
-        map.put("message",status);
+        map.put("message",map1.get("status"));
+        map.put("role",map1.get("role"));
         return ResponseEntity.ok(map);
     }
     @RequestMapping(value="/sendOtp",method=RequestMethod.POST)
