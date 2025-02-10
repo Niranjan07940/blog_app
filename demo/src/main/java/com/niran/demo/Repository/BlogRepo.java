@@ -111,7 +111,7 @@ public class BlogRepo {
     public String getUpdated(Blog b) {
         String status="";
         String query="update blogpost set blog_title=?,blog_text=?,image_path=?,update_on=? where blog_id=?";
-        Object arr[]={b.getBlogTitle(),b.getBlogId(),b.getImglocation(),b.getUpdatedOn(),b.getBlogId()};
+        Object arr[]={b.getBlogTitle(),b.getBlog(),b.getImglocation(),b.getUpdatedOn(),b.getBlogId()};
         try{
             int x=jdbcTemplate.update(query,arr);
             if(x==1){

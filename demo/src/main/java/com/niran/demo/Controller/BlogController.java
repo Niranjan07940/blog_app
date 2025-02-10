@@ -134,7 +134,7 @@ public class BlogController {
         return new ResponseEntity<>(map,HttpStatus.valueOf(400));
     }
     @RequestMapping(value="/updateBlog",method=RequestMethod.POST)
-    public ResponseEntity<?> updateBlog(@RequestParam("bid") int id,@RequestParam("btitle") String btitle,
+    public ResponseEntity<?> updateBlog(@RequestParam("blog_id") int id,@RequestParam("btitle") String btitle,
                                         @RequestParam("blog") String blog,@RequestPart("file")MultipartFile file){
         String status="";
         Map<String,Object> map=new HashMap<>();
