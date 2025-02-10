@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AdminService {
     @Autowired
@@ -16,5 +18,10 @@ public class AdminService {
         user.setPassword(encoder.encode(user.getPassword()));
         return adminRepo.addAdmin(user);
 
+    }
+
+    public List<User> getAdmins() {
+        List<User> user=adminRepo.getAdminByRepo();
+        return user;
     }
 }

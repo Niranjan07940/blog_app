@@ -13,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -37,5 +38,15 @@ public class AdminController {
         }
         map.put("message",status);
         return new ResponseEntity<>(map,HttpStatus.valueOf(400));
+    }
+    @RequestMapping(value="/allUsers",method=RequestMethod.GET)
+    public ResponseEntity<?> getAdmins(){
+        Map<String,Object> map = new HashMap<>();
+        List<User> users= adminService.getAdmins();
+        if(users==null){
+            map.put("message","no users or admins are found");
+            return new ResponseEntity<>(map,HttpStatus.valueOf(400));
+        }
+        return new ResponseEntity<>(users,HttpStatus.OK);
     }
 }
