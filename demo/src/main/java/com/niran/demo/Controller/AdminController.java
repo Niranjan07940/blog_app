@@ -49,11 +49,18 @@ public class AdminController {
         }
         return new ResponseEntity<>(users,HttpStatus.OK);
     }
-    @RequestMapping(value="/deleteUser",method=RequestMethod.POST)
+    @RequestMapping(value="/deleteUser",method=RequestMethod.GET)
     public ResponseEntity<?> deleteUser(@RequestBody User u){
+        Map<String,Object> map=new HashMap<>();
         String status=adminService.deleteUsers(u);
-        return null;
+        if(status.equals("success")){
+            map.put("message","user deleted successfully");
+            return new ResponseEntity<>(map,HttpStatus.OK);
+        }
+        map.put("message",status);
+        return new ResponseEntity<>(map,HttpStatus.valueOf(400));
 
     }
+
 
 }
