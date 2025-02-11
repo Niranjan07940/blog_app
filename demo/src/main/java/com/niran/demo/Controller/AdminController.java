@@ -49,7 +49,7 @@ public class AdminController {
         }
         return new ResponseEntity<>(users,HttpStatus.OK);
     }
-    @RequestMapping(value="/deleteUser",method=RequestMethod.GET)
+    @RequestMapping(value="/deleteUser",method=RequestMethod.POST)
     public ResponseEntity<?> deleteUser(@RequestBody User u){
         Map<String,Object> map=new HashMap<>();
         String status=adminService.deleteUsers(u);
