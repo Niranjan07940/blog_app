@@ -124,4 +124,34 @@ public class BlogRepo {
         }
         return status;
     }
+
+    @Transactional
+    public String commentRepo(int blogId, String comment, String postedBy) {
+        String status="";
+        String query="INSERT INTO comment(blog_id,comments,posted_by) VALUES (?,?,?)";
+        Object arr[]={blogId,(comment == null || comment.trim().isEmpty())? "no-comment" : comment,postedBy};
+        int x=jdbcTemplate.update(query,arr);
+        if(x==1){
+            status="success";
+        }
+        else{
+            status="failure";
+        }
+        return status;
+    }
+
+    @Transactional
+    public String addLikeRepo(int blogId, int like, String postedBy) {
+        String status="";
+        String query="INSERT INTO  LikeBy(blog_id,likes,posted_by) VALUES (?,?,?)";
+        Object arr[]={blogId,1,postedBy};
+        int x=jdbcTemplate.update(query,arr);
+        if(x==1){
+            status="success";
+        }
+        else{
+            status="failure";
+        }
+        return status;
+    }
 }

@@ -1,6 +1,7 @@
 package com.niran.demo.Controller;
 
 import com.niran.demo.Beans.Blog;
+import com.niran.demo.Beans.LikeComment;
 import com.niran.demo.Beans.User;
 import com.niran.demo.Service.BlogService;
 import jakarta.mail.internet.MimeMessage;
@@ -178,6 +179,35 @@ public class BlogController {
         map.put("message",status);
         return new ResponseEntity<>(map,HttpStatus.valueOf(400));
     }
+
+    @RequestMapping(value="/comment",method=RequestMethod.GET)
+    public ResponseEntity<?> comments(@RequestBody LikeComment likecomment){
+        String status=blogService.comments(likecomment);
+        Map<String,Object> map= new HashMap<>();
+        if(status.equals("success")){
+            map.put("message","successfully inserted");
+            return new ResponseEntity<>(map,HttpStatus.OK);
+        }
+        map.put("message","not inserted");
+        return new ResponseEntity<>(map,HttpStatus.valueOf(400));
+    }
+    @RequestMapping(value="/like",method=RequestMethod.GET)
+    public ResponseEntity<?> like(@RequestBody LikeComment likecomment){
+        String status=blogService.addLikes(likecomment);
+        Map<String,Object> map= new HashMap<>();
+        if(status.equals("success")){
+            map.put("message","successfully inserted");
+            return new ResponseEntity<>(map,HttpStatus.OK);
+        }
+        map.put("message","not inserted");
+        return new ResponseEntity<>(map,HttpStatus.valueOf(400));
+    }
+    @RequestMapping(value="/getLikesComments",method=RequestMethod.GET)
+    public ResponseEntity<?> getLikeComment(@RequestBody Blog b){
+        
+        return null;
+    }
+
 
     @RequestMapping(value="/test",method=RequestMethod.POST)
     public String sendEmial() throws Exception{

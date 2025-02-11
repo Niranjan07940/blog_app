@@ -44,9 +44,16 @@ public class AdminController {
         Map<String,Object> map = new HashMap<>();
         List<User> users= adminService.getAdmins();
         if(users==null){
-            map.put("message","no users or admins are found");
+            map.put("message","no users or admins  found");
             return new ResponseEntity<>(map,HttpStatus.valueOf(400));
         }
         return new ResponseEntity<>(users,HttpStatus.OK);
     }
+    @RequestMapping(value="/deleteUser",method=RequestMethod.POST)
+    public ResponseEntity<?> deleteUser(@RequestBody User u){
+        String status=adminService.deleteUsers(u);
+        return null;
+
+    }
+
 }

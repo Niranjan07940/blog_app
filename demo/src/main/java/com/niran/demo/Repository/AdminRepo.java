@@ -48,4 +48,9 @@ public class AdminRepo {
            return user.isEmpty()?null:user;
 
     }
+
+    public String delete(String uname) {
+        String query="delete from blogpost where ";
+        return null;
+    }
 }

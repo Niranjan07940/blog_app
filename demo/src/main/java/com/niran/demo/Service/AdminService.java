@@ -24,4 +24,8 @@ public class AdminService {
         List<User> user=adminRepo.getAdminByRepo();
         return user;
     }
+
+    public String deleteUsers(User u) {
+        return adminRepo.delete(u.getUname());
+    }
 }

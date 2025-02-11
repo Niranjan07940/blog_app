@@ -1,6 +1,7 @@
 package com.niran.demo.Service;
 
 import com.niran.demo.Beans.Blog;
+import com.niran.demo.Beans.LikeComment;
 import com.niran.demo.Repository.BlogRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,5 +56,15 @@ public class BlogService {
         Timestamp ts= new Timestamp(utilDate.getTime());
         b.setUpdatedOn(ts);
         return blogRepo.getUpdated(b);
+    }
+
+    public String comments(LikeComment likecomment) {
+        String status=blogRepo.commentRepo(likecomment.getBlogId(),likecomment.getComment(),likecomment.getPostedBy());
+        return status;
+    }
+    public String addLikes(LikeComment likecomment) {
+        String status=blogRepo.addLikeRepo(likecomment.getBlogId(),likecomment.getLike(),likecomment.getPostedBy());
+        return status;
+
     }
 }
