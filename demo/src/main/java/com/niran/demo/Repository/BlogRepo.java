@@ -165,9 +165,7 @@ public class BlogRepo {
         try{
             int x=jdbcTemplate.queryForObject(query1,arr,Integer.class);
             int x1=jdbcTemplate.queryForObject(query2,arr,Integer.class);
-            lk.setLike(x);
-            lk.setComments(x1);
-            System.out.println(x+" "+x1);
+            
         }
         catch(Exception e){
             e.printStackTrace();
