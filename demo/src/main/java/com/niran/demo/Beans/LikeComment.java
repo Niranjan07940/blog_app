@@ -25,16 +25,20 @@ public class LikeComment {
         this.comment = comment;
     }
 
-    public String getPostedBy() {
-        return postedBy;
-    }
 
-    public void setPostedBy(String postedBy) {
-        this.postedBy = postedBy;
-    }
+
+
 
     private int blogId;
     private int like;
     private String comment;
-    private String postedBy;
+    private String uname;
+
+    public String getUname() {
+        return uname;
+    }
+
+    public void setUname(String uname) {
+        this.uname = uname;
+    }
 }

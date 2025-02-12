@@ -59,11 +59,11 @@ public class BlogService {
     }
 
     public String comments(LikeComment likecomment) {
-        String status=blogRepo.commentRepo(likecomment.getBlogId(),likecomment.getComment(),likecomment.getPostedBy());
+        String status=blogRepo.commentRepo(likecomment.getBlogId(),likecomment.getComment(),likecomment.getUname());
         return status;
     }
     public String addLikes(LikeComment likecomment) {
-        String status=blogRepo.addLikeRepo(likecomment.getBlogId(),likecomment.getLike(),likecomment.getPostedBy());
+        String status=blogRepo.addLikeRepo(likecomment.getBlogId(),likecomment.getLike(),likecomment.getUname());
         return status;
 
     }
