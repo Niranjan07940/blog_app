@@ -169,7 +169,7 @@ public class BlogRepo {
             lk.setNoComments(x1);
         }
         catch(Exception e){
-            e.printStackTrace();
+            e.getMessage();
         }
         return lk;
 
