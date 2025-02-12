@@ -180,7 +180,7 @@ public class BlogController {
         return new ResponseEntity<>(map,HttpStatus.valueOf(400));
     }
 
-    @RequestMapping(value="/comment",method=RequestMethod.GET)
+    @RequestMapping(value="/comment",method=RequestMethod.POST)
     public ResponseEntity<?> comments(@RequestBody LikeComment likecomment){
         String status=blogService.comments(likecomment);
         Map<String,Object> map= new HashMap<>();
@@ -191,7 +191,7 @@ public class BlogController {
         map.put("message","not inserted");
         return new ResponseEntity<>(map,HttpStatus.valueOf(400));
     }
-    @RequestMapping(value="/like",method=RequestMethod.GET)
+    @RequestMapping(value="/like",method=RequestMethod.POST)
     public ResponseEntity<?> like(@RequestBody LikeComment likecomment){
         String status=blogService.addLikes(likecomment);
         Map<String,Object> map= new HashMap<>();
