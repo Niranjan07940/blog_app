@@ -1,6 +1,7 @@
 package com.niran.demo.Repository;
 
 import com.niran.demo.Beans.Blog;
+import com.niran.demo.Beans.LikeComment;
 import com.niran.demo.Beans.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -153,5 +154,26 @@ public class BlogRepo {
             status="failure";
         }
         return status;
+    }
+
+
+    public LikeComment getLikeComment(int blogId) {
+        String query1="SELECT SUM(likes) AS total_likes from LikeBy WHERE blog_id =?";
+        String query2="SELECT COUNT(comment) FROM comment WHERE blog_id = ?";
+        Object arr[]={blogId};
+        LikeComment lk= new LikeComment();
+        try{
+            int x=jdbcTemplate.queryForObject(query1,arr,Integer.class);
+            int x1=jdbcTemplate.queryForObject(query2,arr,Integer.class);
+            lk.setLike(x);
+            lk.setComments(x1);
+            System.out.println(x+" "+x1);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return lk;
+
     }
 }

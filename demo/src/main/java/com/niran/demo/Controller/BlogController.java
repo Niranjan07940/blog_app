@@ -204,7 +204,9 @@ public class BlogController {
     }
     @RequestMapping(value="/getLikesComments",method=RequestMethod.GET)
     public ResponseEntity<?> getLikeComment(@RequestBody Blog b){
-        return null;
+        LikeComment lk=blogService.getlikescomments(b);
+        System.out.println(lk);
+        return new ResponseEntity<>(lk,HttpStatus.OK);
     }
 
 

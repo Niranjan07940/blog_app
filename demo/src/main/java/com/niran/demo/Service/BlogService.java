@@ -67,4 +67,10 @@ public class BlogService {
         return status;
 
     }
+
+    public LikeComment getlikescomments(Blog b) {
+        LikeComment lk=blogRepo.getLikeComment(b.getBlogId());
+        return lk;
+
+    }
 }
