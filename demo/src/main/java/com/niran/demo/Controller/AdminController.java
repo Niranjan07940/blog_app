@@ -59,8 +59,5 @@ public class AdminController {
         }
         map.put("message",status);
         return new ResponseEntity<>(map,HttpStatus.valueOf(400));
-
     }
-
-
 }

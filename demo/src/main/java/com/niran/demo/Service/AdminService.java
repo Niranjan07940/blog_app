@@ -17,14 +17,11 @@ public class AdminService {
     public String addAdmin(User user) {
         user.setPassword(encoder.encode(user.getPassword()));
         return adminRepo.addAdmin(user);
-
     }
-
     public List<User> getAdmins() {
         List<User> user=adminRepo.getAdminByRepo();
         return user;
     }
-
     public String deleteUsers(User u) {
         return adminRepo.delete(u.getUname());
     }
