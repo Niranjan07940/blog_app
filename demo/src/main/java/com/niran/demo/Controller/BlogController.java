@@ -202,7 +202,7 @@ public class BlogController {
         map.put("message","not inserted");
         return new ResponseEntity<>(map,HttpStatus.valueOf(400));
     }
-    @RequestMapping(value="/getLikesComments",method=RequestMethod.GET)
+    @RequestMapping(value="/getLikesComments",method=RequestMethod.POST)
     public ResponseEntity<?> getLikeComment(@RequestBody Blog b){
         LikeComment lk=blogService.getlikescomments(b);
         Map<String,Object> map=new HashMap<>();
