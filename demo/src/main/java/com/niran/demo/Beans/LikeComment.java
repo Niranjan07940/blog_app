@@ -33,24 +33,14 @@ public class LikeComment {
     private int like;
     private String comment;
     private String uname;
-    private int likes;
+    private int noComments;
 
-    public int getComments() {
-        return comments;
+    public int getNoComments() {
+        return noComments;
     }
 
-    public void setComments(int comments) {
-        this.comments = comments;
-    }
-
-    private int comments;
-
-    public int getLikes() {
-        return likes;
-    }
-
-    public void setLikes(int likes) {
-        this.likes = likes;
+    public void setNoComments(int noComments) {
+        this.noComments = noComments;
     }
 
     public String getUname() {
