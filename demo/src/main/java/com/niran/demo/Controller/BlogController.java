@@ -191,13 +191,17 @@ public class BlogController {
         map.put("message","not inserted");
         return new ResponseEntity<>(map,HttpStatus.valueOf(400));
     }
-    @RequestMapping(value="/like",method=RequestMethod.POST)
+    @RequestMapping(value="/like",method=RequestMethod.GET)
     public ResponseEntity<?> like(@RequestBody Blog b){
         String status=blogService.addLikes(b);
         Map<String,Object> map= new HashMap<>();
         if(status.equals("success")){
             map.put("message","successfully inserted");
             return new ResponseEntity<>(map,HttpStatus.OK);
+        }
+        else if(status.equals("liked")){
+            map.put("message","user already liked");
+            return new ResponseEntity<>(map,HttpStatus.valueOf(400));
         }
         map.put("message","not inserted");
         return new ResponseEntity<>(map,HttpStatus.valueOf(400));

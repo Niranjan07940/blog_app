@@ -4,6 +4,7 @@ import com.niran.demo.Beans.Blog;
 import com.niran.demo.Beans.LikeComment;
 import com.niran.demo.Beans.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.relational.core.sql.Like;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -144,6 +145,20 @@ public class BlogRepo {
     @Transactional
     public String addLikeRepo(int blogId,String postedBy) {
         String status="";
+        String query1="select *from LikeBy where blog_id=? and posted_by =?";
+        Object arr1[]={blogId,postedBy};
+        List<LikeComment> lk= jdbcTemplate.query(query1,arr1,(rs,rowNum)->{
+            LikeComment likeComment = new LikeComment();
+            likeComment.setUname(rs.getString(3));
+            likeComment.setBlogId(rs.getInt(1));
+            likeComment.setLike(rs.getInt(2));
+            return likeComment;
+        });
+//        return lk.isEmpty()?null:lk;
+        if(lk!=null){
+            status="liked";
+            return status;
+        }
         String query="INSERT INTO  LikeBy(blog_id,likes,posted_by) VALUES (?,?,?)";
         Object arr[]={blogId,1,postedBy};
         int x=jdbcTemplate.update(query,arr);
