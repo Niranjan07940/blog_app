@@ -191,12 +191,13 @@ public class BlogRepo {
         String status="";
         String query="delete from LikeBy where blog_id=? and posted_by=?";
         Object arr[] ={blogId,uname};
-        int x=jdbcTemplate.update(query,arr);
-        if(x==1){
+        try{
+            jdbcTemplate.update(query,arr);
             status="success";
         }
-        else{
-            status="failure to unlike";
+        catch(Exception e){
+            status="failure to deslike";
+            e.printStackTrace();
         }
         return status;
     }
