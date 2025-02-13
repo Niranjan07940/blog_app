@@ -73,4 +73,9 @@ public class BlogService {
         return lk;
 
     }
+
+    public List<LikeComment> getComments(Blog b) {
+        List<LikeComment> likeComment=blogRepo.getComments(b.getBlogId());
+        return likeComment;
+    }
 }

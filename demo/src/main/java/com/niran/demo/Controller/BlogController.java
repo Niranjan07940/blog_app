@@ -210,6 +210,17 @@ public class BlogController {
         map.put("comments",lk.getNoComments());
         return new ResponseEntity<>(map,HttpStatus.OK);
     }
+    @RequestMapping(value="/getComments",method =RequestMethod.GET)
+    public ResponseEntity<?> getComments(@RequestBody Blog b){
+        List<LikeComment> lk=blogService.getComments(b);
+        Map<String,Object> map= new HashMap<>();
+        if(lk==null){
+            map.put("message","no comments found");
+            return new ResponseEntity<>(map,HttpStatus.valueOf(400));
+        }
+        return new ResponseEntity<>(lk,HttpStatus.OK);
+    }
+
 
 
 

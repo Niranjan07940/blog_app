@@ -174,4 +174,17 @@ public class BlogRepo {
         return lk;
 
     }
+
+    public List<LikeComment> getComments(int blogId) {
+        String query="select *from comment where blog_id=?";
+        Object arr[]={blogId};
+        List<LikeComment> comments=jdbcTemplate.query(query,arr,(rs,rowNum)->{
+            LikeComment lk= new LikeComment();
+            lk.setBlogId(rs.getInt(1));
+            lk.setComment(rs.getString(2));
+            lk.setUname(rs.getString(3));
+            return lk;
+        });
+        return comments.isEmpty()?null:comments;
+    }
 }
