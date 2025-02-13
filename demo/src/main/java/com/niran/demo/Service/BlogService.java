@@ -32,8 +32,16 @@ public class BlogService {
 
     public List<Blog> getAllBlogs() {
         List<Blog> blog=blogRepo.getAllBlogsFormrepo();
+        for(Blog b:blog){
+            String status=blogRepo.checkLikes(b.getBlogId(),b.getUname());
+            if(status.equals("Liked")){
+                b.setLiked(true);
+            }
+            b.setLiked(false);
+        }
         return blog;
     }
+
 
 
     public Blog getBlogData(int blogId) {

@@ -126,7 +126,6 @@ public class BlogRepo {
         }
         return status;
     }
-
     @Transactional
     public String commentRepo(int blogId, String comment, String postedBy) {
         String status="";
@@ -145,20 +144,6 @@ public class BlogRepo {
     @Transactional
     public String addLikeRepo(int blogId,String postedBy) {
         String status="";
-        String query1="select *from LikeBy where blog_id=? and posted_by =?";
-        Object arr1[]={blogId,postedBy};
-        List<LikeComment> lk= jdbcTemplate.query(query1,arr1,(rs,rowNum)->{
-            LikeComment likeComment = new LikeComment();
-            likeComment.setUname(rs.getString(3));
-            likeComment.setBlogId(rs.getInt(1));
-            likeComment.setLike(rs.getInt(2));
-            return likeComment;
-        });
-        System.out.println(lk);
-        if(!lk.isEmpty()){
-            status="Liked";
-            return status;
-        }
         String query="INSERT INTO  LikeBy(blog_id,likes,posted_by) VALUES (?,?,?)";
         Object arr[]={blogId,1,postedBy};
         int x=jdbcTemplate.update(query,arr);
@@ -170,6 +155,7 @@ public class BlogRepo {
         }
         return status;
     }
+
     public LikeComment getLikeComment(int blogId) {
         String query1="SELECT SUM(likes) AS total_likes from LikeBy WHERE blog_id =?";
         String query2="SELECT COUNT(comment) FROM comment WHERE blog_id = ?";
@@ -215,5 +201,24 @@ public class BlogRepo {
             e.printStackTrace();
         }
         return status;
+    }
+
+    public String checkLikes(int blogId, String uname) {
+        String status="";
+        String query1="select *from LikeBy where blog_id=? and posted_by =?";
+        Object arr1[]={blogId,uname};
+        List<LikeComment> lk= jdbcTemplate.query(query1,arr1,(rs,rowNum)->{
+            LikeComment likeComment = new LikeComment();
+            likeComment.setUname(rs.getString(3));
+            likeComment.setBlogId(rs.getInt(1));
+            likeComment.setLike(rs.getInt(2));
+            return likeComment;
+        });
+        if(!lk.isEmpty()){
+            status="Liked";
+        }
+        status="not Liked";
+        return status;
+
     }
 }

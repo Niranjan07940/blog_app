@@ -9,6 +9,16 @@ import java.sql.Timestamp;
 
 public class Blog {
     private int blogId;
+    private boolean isLiked;
+
+    public boolean isLiked() {
+        return isLiked;
+    }
+
+    public void setLiked(boolean liked) {
+        isLiked = liked;
+    }
+
     @NotBlank(message="Image is required")
     private String imglocation;
 
