@@ -11,6 +11,25 @@ public class Blog {
     private int blogId;
     private boolean isLiked;
 
+    public int getLikes() {
+        return Likes;
+    }
+
+    public void setLikes(int likes) {
+        Likes = likes;
+    }
+
+    public int getComments() {
+        return comments;
+    }
+
+    public void setComments(int comments) {
+        this.comments = comments;
+    }
+
+    private int Likes;
+    private int comments;
+
     public boolean isLiked() {
         return isLiked;
     }

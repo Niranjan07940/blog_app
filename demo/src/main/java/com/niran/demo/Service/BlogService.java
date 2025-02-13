@@ -29,10 +29,12 @@ public class BlogService {
         return blogRepo.getBImg(id);
     }
 
-
     public List<Blog> getAllBlogs() {
         List<Blog> blog=blogRepo.getAllBlogsFormrepo();
         for(Blog b:blog){
+            LikeComment lk=blogRepo.getLikeComment(b.getBlogId());
+            b.setLikes(lk.getLike());
+            b.setComments(lk.getNoComments());
             String status=blogRepo.checkLikes(b.getBlogId(),b.getUname());
             if(status.equals("Liked")){
                 b.setLiked(true);
@@ -40,7 +42,6 @@ public class BlogService {
             else{
                 b.setLiked(false);
             }
-
         }
         return blog;
     }
