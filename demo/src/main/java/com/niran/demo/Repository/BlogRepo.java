@@ -155,8 +155,6 @@ public class BlogRepo {
         }
         return status;
     }
-
-
     public LikeComment getLikeComment(int blogId) {
         String query1="SELECT SUM(likes) AS total_likes from LikeBy WHERE blog_id =?";
         String query2="SELECT COUNT(comment) FROM comment WHERE blog_id = ?";
