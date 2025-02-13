@@ -62,8 +62,8 @@ public class BlogService {
         String status=blogRepo.commentRepo(likecomment.getBlogId(),likecomment.getComment(),likecomment.getUname());
         return status;
     }
-    public String addLikes(LikeComment likecomment) {
-        String status=blogRepo.addLikeRepo(likecomment.getBlogId(),likecomment.getLike(),likecomment.getUname());
+    public String addLikes(Blog b) {
+        String status=blogRepo.addLikeRepo(b.getBlogId(),b.getUname());
         return status;
 
     }

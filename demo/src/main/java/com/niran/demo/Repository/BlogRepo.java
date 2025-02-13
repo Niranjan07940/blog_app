@@ -142,7 +142,7 @@ public class BlogRepo {
     }
 
     @Transactional
-    public String addLikeRepo(int blogId, int like, String postedBy) {
+    public String addLikeRepo(int blogId,String postedBy) {
         String status="";
         String query="INSERT INTO  LikeBy(blog_id,likes,posted_by) VALUES (?,?,?)";
         Object arr[]={blogId,1,postedBy};

@@ -192,8 +192,8 @@ public class BlogController {
         return new ResponseEntity<>(map,HttpStatus.valueOf(400));
     }
     @RequestMapping(value="/like",method=RequestMethod.POST)
-    public ResponseEntity<?> like(@RequestBody LikeComment likecomment){
-        String status=blogService.addLikes(likecomment);
+    public ResponseEntity<?> like(@RequestBody Blog b){
+        String status=blogService.addLikes(b);
         Map<String,Object> map= new HashMap<>();
         if(status.equals("success")){
             map.put("message","successfully inserted");
