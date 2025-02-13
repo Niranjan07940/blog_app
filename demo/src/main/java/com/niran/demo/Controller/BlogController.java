@@ -210,7 +210,7 @@ public class BlogController {
         map.put("comments",lk.getNoComments());
         return new ResponseEntity<>(map,HttpStatus.OK);
     }
-    @RequestMapping(value="/getComments",method =RequestMethod.GET)
+    @RequestMapping(value="/getComments",method =RequestMethod.POST)
     public ResponseEntity<?> getComments(@RequestBody Blog b){
         List<LikeComment> lk=blogService.getComments(b);
         Map<String,Object> map= new HashMap<>();
