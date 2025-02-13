@@ -191,7 +191,7 @@ public class BlogRepo {
     @Transactional
     public String deleteLikeRepo(int blogId, String uname) {
         String status="";
-        String query="delete from LikeBy where posted_by=? and blog_id=?";
+        String query="delete from LikeBy where blog_id=? and posted_by=?";
         Object arr[] ={blogId,uname};
         int x=jdbcTemplate.update(query,arr);
         if(x==1){
