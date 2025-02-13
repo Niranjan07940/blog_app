@@ -155,8 +155,8 @@ public class BlogRepo {
             return likeComment;
         });
         System.out.println(lk);
-        if(lk!=null){
-            status="liked";
+        if(lk==null){
+            status="not liked";
             return status;
         }
         String query="INSERT INTO  LikeBy(blog_id,likes,posted_by) VALUES (?,?,?)";
