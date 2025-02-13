@@ -37,7 +37,10 @@ public class BlogService {
             if(status.equals("Liked")){
                 b.setLiked(true);
             }
-            b.setLiked(false);
+            else{
+                b.setLiked(false);
+            }
+
         }
         return blog;
     }
