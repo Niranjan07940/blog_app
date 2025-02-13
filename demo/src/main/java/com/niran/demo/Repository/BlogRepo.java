@@ -216,6 +216,7 @@ public class BlogRepo {
         });
         if(!lk.isEmpty()){
             status="Liked";
+            return status;
         }
         status="not Liked";
         return status;
