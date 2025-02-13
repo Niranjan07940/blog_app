@@ -199,8 +199,8 @@ public class BlogController {
             map.put("message","successfully inserted");
             return new ResponseEntity<>(map,HttpStatus.OK);
         }
-        else if(status.equals("not liked")){
-            map.put("message","user not liked already");
+        else if(status.equals("Liked")){
+            map.put("message","user liked already");
             return new ResponseEntity<>(map,HttpStatus.valueOf(400));
         }
         map.put("message","not inserted");
