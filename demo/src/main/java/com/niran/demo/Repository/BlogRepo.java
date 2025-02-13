@@ -155,7 +155,7 @@ public class BlogRepo {
             return likeComment;
         });
         System.out.println(lk);
-        if(lk!=null){
+        if(!lk.isEmpty()){
             status="Liked";
             return status;
         }
