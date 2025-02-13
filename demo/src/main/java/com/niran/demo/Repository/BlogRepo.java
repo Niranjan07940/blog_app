@@ -187,4 +187,19 @@ public class BlogRepo {
         });
         return comments.isEmpty()?null:comments;
     }
+
+    @Transactional
+    public String deleteLikeRepo(int blogId, String uname) {
+        String status="";
+        String query="delete from LikeBy where posted_by=? and blog_id=?";
+        Object arr[] ={blogId,uname};
+        int x=jdbcTemplate.update(query,arr);
+        if(x==1){
+            status="success";
+        }
+        else{
+            status="failure to unlike";
+        }
+        return status;
+    }
 }

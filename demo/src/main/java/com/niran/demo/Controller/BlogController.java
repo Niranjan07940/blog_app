@@ -220,10 +220,17 @@ public class BlogController {
         }
         return new ResponseEntity<>(lk,HttpStatus.OK);
     }
-
-
-
-
+    @RequestMapping(value="/deleteLike",method=RequestMethod.POST)
+    public ResponseEntity<?> deleteLike(@RequestBody Blog b){
+        String status=blogService.deleteLikeService(b);
+        Map<String,Object> map= new HashMap<>();
+        if(status.equals("success")){
+            map.put("message","successfully desliked");
+            return new ResponseEntity<>(map,HttpStatus.OK);
+        }
+        map.put("message",status);
+        return new ResponseEntity<>(map,HttpStatus.valueOf(400));
+    }
 
     @RequestMapping(value="/test",method=RequestMethod.POST)
     public String sendEmial() throws Exception{

@@ -78,4 +78,9 @@ public class BlogService {
         List<LikeComment> likeComment=blogRepo.getComments(b.getBlogId());
         return likeComment;
     }
+
+    public String deleteLikeService(Blog b) {
+        String status=blogRepo.deleteLikeRepo(b.getBlogId(),b.getUname());
+        return status;
+    }
 }
