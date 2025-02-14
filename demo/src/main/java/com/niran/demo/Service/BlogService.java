@@ -46,8 +46,8 @@ public class BlogService {
         return blog;
     }
 
-    public Blog getBlogData(int blogId) {
-        Blog b=blogRepo.getBlogDataById(blogId);
+    public Blog getBlogData(Blog blog) {
+        Blog b=blogRepo.getBlogDataById(blog.getBlogId());
         return b;
 
     }

@@ -68,6 +68,8 @@ public class BlogRepo {
         Object arr[]={blogId};
         List<Blog> list1=jdbcTemplate.query(query,arr,(rs,rowNum)->{
             Blog b = new Blog();
+            b.setUname(rs.getString(1));
+            b.setBlogId(rs.getInt(2));
             b.setBlogTitle(rs.getString(3));
             b.setBlog(rs.getString(4));
             b.setImglocation(rs.getString(5));

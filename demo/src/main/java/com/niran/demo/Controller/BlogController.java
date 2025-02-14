@@ -101,9 +101,9 @@ public class BlogController {
         }
         return new ResponseEntity<>(list,HttpStatus.OK);
     }
-    @RequestMapping(value="/getById/{id}",method=RequestMethod.GET)
-    public ResponseEntity<?> getBlogById(@PathVariable("id") int id){
-        Blog blogs=blogService.getBlogData(id);
+    @RequestMapping(value="/getById",method=RequestMethod.GET)
+    public ResponseEntity<?> getBlogById(@RequestBody Blog b){
+        Blog blogs=blogService.getBlogData(b);
         List<Blog> list=new ArrayList<>();
         list.add(blogs);
         return new ResponseEntity<>(list,HttpStatus.OK);
