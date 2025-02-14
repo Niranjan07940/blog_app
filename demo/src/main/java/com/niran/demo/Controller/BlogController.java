@@ -101,7 +101,7 @@ public class BlogController {
         }
         return new ResponseEntity<>(list,HttpStatus.OK);
     }
-    @RequestMapping(value="/getById",method=RequestMethod.GET)
+    @RequestMapping(value="/getById",method=RequestMethod.POST)
     public ResponseEntity<?> getBlogById(@RequestBody Blog b){
         Blog blogs=blogService.getBlogData(b);
         List<Blog> list=new ArrayList<>();
