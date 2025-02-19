@@ -52,8 +52,22 @@ public class BlogService {
     }
 
     public List<Blog> getBlogsByUname(String uname) {
-        List<Blog> b=blogRepo.getAllBlogsByUname(uname);
-        return b;
+        List<Blog> blog=blogRepo.getAllBlogsByUname(uname);
+//        List<Blog> blog=blogRepo.getAllBlogsFormrepo();
+        for(Blog b:blog){
+            LikeComment lk=blogRepo.getLikeComment(b.getBlogId());
+            b.setLikes(lk.getLike());
+            b.setComments(lk.getNoComments());
+            String status=blogRepo.checkLikes(b.getBlogId(),uname);
+            if(status.equals("Liked")){
+                b.setLiked(true);
+            }
+            else{
+                b.setLiked(false);
+            }
+        }
+        return blog;
+
     }
 
     public String deleteBlogById(int blogId) {

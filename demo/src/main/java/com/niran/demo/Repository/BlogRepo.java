@@ -188,7 +188,6 @@ public class BlogRepo {
         });
         return comments.isEmpty()?null:comments;
     }
-
     @Transactional
     public String deleteLikeRepo(int blogId, String uname) {
         String status="";
