@@ -95,7 +95,7 @@ public class UserRepo {
     }
 
     public List<User> getUserDataRepo(String uname) {
-        String query="select register1.email,register2.fname,register2.lname,register2.dob from " +
+        String query="select register1.uname,register1.email,register2.fname,register2.lname,register2.gender,register2.dob from " +
                 "register1 INNER JOIN register2 ON register1.uname=register2.uname where register1.uname=?";
         Object arr[]={uname};
             List<User> user=jdbcTemplate.query(query,arr,(rs,rowNum)->{
