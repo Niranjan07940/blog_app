@@ -49,7 +49,6 @@ public class BlogService {
     public Blog getBlogData(Blog blog) {
         Blog b=blogRepo.getBlogDataById(blog.getBlogId());
         return b;
-
     }
 
     public List<Blog> getBlogsByUname(String uname) {
