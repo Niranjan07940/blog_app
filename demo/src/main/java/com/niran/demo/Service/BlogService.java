@@ -48,6 +48,16 @@ public class BlogService {
 
     public Blog getBlogData(Blog blog) {
         Blog b=blogRepo.getBlogDataById(blog.getBlogId());
+        LikeComment lk=blogRepo.getLikeComment(b.getBlogId());
+        b.setLikes(lk.getLike());
+        b.setComments(lk.getNoComments());
+        String status=blogRepo.checkLikes(b.getBlogId(),blog.getUname());
+        if(status.equals("Liked")){
+            b.setLiked(true);
+        }
+        else{
+            b.setLiked(false);
+        }
         return b;
     }
 
