@@ -57,8 +57,6 @@ public class Blog {
         this.blogId = blogId;
     }
 
-
-
     public String getUname() {
         return uname;
     }

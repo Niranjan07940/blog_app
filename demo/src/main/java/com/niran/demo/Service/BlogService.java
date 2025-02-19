@@ -114,4 +114,9 @@ public class BlogService {
         String status=blogRepo.deleteLikeRepo(b.getBlogId(),b.getUname());
         return status;
     }
+
+    public List<LikeComment> getLikes(Blog b) {
+        List<LikeComment> ls= blogRepo.getLiked(b.getBlogId());
+        return ls;
+    }
 }

@@ -212,7 +212,6 @@ public class BlogRepo {
             LikeComment likeComment = new LikeComment();
             likeComment.setUname(rs.getString(3));
             likeComment.setBlogId(rs.getInt(1));
-            likeComment.setLike(rs.getInt(2));
             return likeComment;
         });
         if(!lk.isEmpty()){
@@ -221,6 +220,18 @@ public class BlogRepo {
         }
         status="not Liked";
         return status;
+    }
 
+    @Transactional
+    public List<LikeComment> getLiked(int blogId) {
+        String query="select *from LikeBy where blog_id=?";
+        Object arr[]={blogId};
+        List<LikeComment> ls=jdbcTemplate.query(query,arr,(rs,rowNum)->{
+            LikeComment lk= new LikeComment();
+            lk.setBlogId(rs.getInt(1));
+            lk.setUname(rs.getString(3));
+            return lk;
+        });
+        return ls.isEmpty()?null:ls;
     }
 }

@@ -26,10 +26,8 @@ public class LikeComment {
     }
 
 
-
-
-
     private int blogId;
+
     private int like;
     private String comment;
     private String uname;
