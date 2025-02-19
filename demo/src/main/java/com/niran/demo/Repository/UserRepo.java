@@ -103,8 +103,8 @@ public class UserRepo {
                 u.setEmail(rs.getString("email"));
                 u.setFname(rs.getString("fname"));
                 u.setLname(rs.getString("lname"));
-                u.setLname(rs.getString("uname"));
-                u.setLname(rs.getString("gender"));
+                u.setUname(rs.getString("uname"));
+                u.setGender(rs.getString("gender"));
                 u.setDateofbirth(String.valueOf(rs.getDate("dob")));
                 return u;
             });
