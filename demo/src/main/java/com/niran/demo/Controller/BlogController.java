@@ -217,12 +217,7 @@ public class BlogController {
     @RequestMapping(value="/getLikedBy",method=RequestMethod.POST)
     public ResponseEntity<?> getLikedBy(@RequestBody Blog b){
         Map<String,Object> map= new HashMap<>();
-        if(b==null){
-            map.put("message","blog id is required");
-            return new ResponseEntity<>(map,HttpStatus.valueOf(400));
-        }
         List<LikeComment> lk= blogService.getLikes(b);
-
         if(lk==null){
             map.put("message","no likes avaliable");
             return new ResponseEntity<>(map,HttpStatus.valueOf(400));
