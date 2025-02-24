@@ -129,8 +129,12 @@ public class UserController {
     }
     @RequestMapping(value="/updateProfile",method=RequestMethod.POST)
     public ResponseEntity<?> updateUser(@RequestBody User u){
-        String status=userService.updateUserDetails(u);
         Map<String,Object> map=new HashMap<>();
+        if(u.getUname()==null){
+            map.put("message","uname is required");
+            return new ResponseEntity<>(map,HttpStatus.valueOf(400));
+        }
+        String status=userService.updateUserDetails(u);
         if(status.equals("success")){
             status="user successfully updated";
             map.put("message",status);
