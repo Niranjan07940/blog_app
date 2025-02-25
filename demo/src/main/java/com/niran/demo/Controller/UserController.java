@@ -52,10 +52,7 @@ public class UserController {
             return new ResponseEntity<>(map,HttpStatusCode.valueOf(400));
         }
         Map<String,Object> map1=userService.userVerify(u);
-//        if(status.equals(null)){
-//            status="user does not exist";
-//        }
-//        map.put("message",status);
+
         if(map1==null || map1.isEmpty()){
             map.put("message","user does not exist!");
             return new ResponseEntity<>(map,HttpStatus.valueOf(400));
@@ -143,4 +140,5 @@ public class UserController {
         map.put("message",status);
         return new ResponseEntity<>(map,HttpStatus.valueOf(400));
     }
+
 }
