@@ -7,7 +7,7 @@ import com.niran.demo.Validation.UpdatePasswordValidation;
 import jakarta.validation.constraints.*;
 
 public class User {
-    @NotBlank(message="Uname cannot be empty",groups = {RegistrationValidationGroup.class,LoginValidationGroup.class})
+    @NotBlank(message="Uname cannot be empty",groups = {RegistrationValidationGroup.class})
     @Size(min = 4, max = 20, message = "Username must be between 4 and 20 characters",groups = {RegistrationValidationGroup.class,LoginValidationGroup.class})
     private String uname;
     @NotBlank(message="Password cannot be empty",groups = {RegistrationValidationGroup.class,LoginValidationGroup.class, UpdatePasswordValidation.class})
